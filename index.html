@@ -1331,6 +1331,306 @@
       ]
     };
 
+    const EXTRA_BANK = {
+      listening: [
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'Pencil Case',
+          prompt: 'Listen and choose the picture.',
+          audio: 'Put your pencil in the pencil case.',
+          answer: 'book',
+          hint: '聽 pencil 和 pencil case。',
+          explain: 'pencil case 是鉛筆盒。',
+          choices: [
+            { id: 'book', label: 'School things', scene: 'book' },
+            { id: 'park', label: 'A park', scene: 'park' },
+            { id: 'cake', label: 'A cake', scene: 'cake' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'After Class',
+          prompt: 'Listen and choose the activity.',
+          audio: 'Amy plays soccer with her friends after class.',
+          answer: 'soccer',
+          hint: '聽 plays soccer。',
+          explain: 'after class 是下課後。',
+          choices: [
+            { id: 'soccer', label: 'Play soccer', scene: 'soccer' },
+            { id: 'sleep', label: 'Go to bed', scene: 'sleep' },
+            { id: 'market', label: 'Go shopping', scene: 'market' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'home',
+          title: 'Evening Routine',
+          prompt: 'Listen and choose what the girl does.',
+          audio: 'The girl watches TV with her brother at night.',
+          answer: 'watch',
+          hint: '聽 watches TV。',
+          explain: 'watch TV 是看電視。',
+          choices: [
+            { id: 'watch', label: 'Watch TV', scene: 'watch' },
+            { id: 'clean', label: 'Clean the room', scene: 'clean' },
+            { id: 'library', label: 'Read in a library', scene: 'library' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'home',
+          title: 'Bed Time',
+          prompt: 'Listen and choose the picture.',
+          audio: 'It is nine o clock. Please go to bed.',
+          answer: 'sleep',
+          hint: '聽 go to bed。',
+          explain: 'go to bed 是上床睡覺。',
+          choices: [
+            { id: 'sleep', label: 'Go to bed', scene: 'sleep' },
+            { id: 'running', label: 'Run outside', scene: 'running' },
+            { id: 'noodles', label: 'Eat noodles', scene: 'noodles' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'food',
+          title: 'Breakfast Drink',
+          prompt: 'Listen and choose the picture.',
+          audio: 'I drink milk for breakfast every day.',
+          answer: 'milk',
+          hint: '聽 drink milk。',
+          explain: 'for breakfast 是早餐。',
+          choices: [
+            { id: 'milk', label: 'Milk', scene: 'milk' },
+            { id: 'umbrella', label: 'Umbrella', scene: 'umbrella' },
+            { id: 'park', label: 'Park', scene: 'park' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'weather',
+          title: 'Sunny Morning',
+          prompt: 'Listen and choose the weather.',
+          audio: 'It is sunny today. Let us play in the park.',
+          answer: 'sun',
+          hint: '聽 sunny。',
+          explain: 'sunny 是晴朗的。',
+          choices: [
+            { id: 'sun', label: 'Sunny', scene: 'sun' },
+            { id: 'snow', label: 'Snowy', scene: 'snow' },
+            { id: 'umbrella', label: 'Rainy', scene: 'umbrella' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'places',
+          title: 'At the Market',
+          prompt: 'Listen and choose the place.',
+          audio: 'Mom buys apples at the market.',
+          answer: 'market',
+          hint: '聽 buys apples 和 market。',
+          explain: 'market 是市場。',
+          choices: [
+            { id: 'market', label: 'Market', scene: 'market' },
+            { id: 'library', label: 'Library', scene: 'library' },
+            { id: 'watch', label: 'TV room', scene: 'watch' }
+          ]
+        }
+      ],
+      reading: [
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'Lost and Found',
+          passage: 'I found a blue pencil case under the desk. It has two pencils and a small ruler in it. Please ask Mr. Lin after class.',
+          question: 'What color is the pencil case?',
+          answer: 'blue',
+          hint: '找 pencil case 前面的顏色。',
+          explain: '文章說 a blue pencil case。',
+          choices: [
+            { id: 'blue', text: 'Blue' },
+            { id: 'green', text: 'Green' },
+            { id: 'red', text: 'Red' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'Music Class',
+          passage: 'Music class is on Tuesday morning. Please bring your recorder. We will sing a new song, too.',
+          question: 'When is music class?',
+          answer: 'tuesday',
+          hint: '找 is on 後面的時間。',
+          explain: 'Music class is on Tuesday morning.',
+          choices: [
+            { id: 'monday', text: 'Monday afternoon' },
+            { id: 'tuesday', text: 'Tuesday morning' },
+            { id: 'friday', text: 'Friday evening' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'home',
+          title: 'Family Dinner',
+          passage: 'Nina helps Dad set the table. Her brother washes the cups. They eat dinner at six thirty.',
+          question: 'What does Nina do?',
+          answer: 'table',
+          hint: '找 Nina helps Dad 後面的事。',
+          explain: 'set the table 是擺餐桌。',
+          choices: [
+            { id: 'table', text: 'She sets the table.' },
+            { id: 'cups', text: 'She washes the cups.' },
+            { id: 'books', text: 'She reads books.' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'food',
+          title: 'Snack Time',
+          passage: 'There are three bananas and two oranges on the table. Sam takes one banana for his snack.',
+          question: 'What does Sam take?',
+          answer: 'banana',
+          hint: '找 Sam takes one...',
+          explain: 'Sam takes one banana.',
+          choices: [
+            { id: 'banana', text: 'A banana' },
+            { id: 'orange', text: 'An orange' },
+            { id: 'cake', text: 'A cake' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'weather',
+          title: 'Rainy Day',
+          passage: 'It is raining now. The students cannot play outside. They draw pictures in the classroom.',
+          question: 'Where do the students draw pictures?',
+          answer: 'classroom',
+          hint: '找 draw pictures in...',
+          explain: 'They draw pictures in the classroom.',
+          choices: [
+            { id: 'classroom', text: 'In the classroom' },
+            { id: 'park', text: 'In the park' },
+            { id: 'zoo', text: 'At the zoo' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'health',
+          title: 'Feeling Sick',
+          passage: 'Jack has a headache. He tells his teacher. The teacher asks him to drink water and rest.',
+          question: 'How does Jack feel?',
+          answer: 'headache',
+          hint: '找 Jack has a...',
+          explain: 'headache 是頭痛。',
+          choices: [
+            { id: 'hungry', text: 'He is hungry.' },
+            { id: 'headache', text: 'He has a headache.' },
+            { id: 'happy', text: 'He is happy.' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'places',
+          title: 'Park Time',
+          passage: 'Lisa goes to the park with her dad. She rides a bike and sees two birds in the tree.',
+          question: 'Who goes to the park with Lisa?',
+          answer: 'dad',
+          hint: '找 with her...',
+          explain: 'Lisa goes to the park with her dad.',
+          choices: [
+            { id: 'mom', text: 'Her mom' },
+            { id: 'dad', text: 'Her dad' },
+            { id: 'teacher', text: 'Her teacher' }
+          ]
+        }
+      ],
+      vocab: [
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'School Words',
+          word: 'ruler',
+          phonics: 'ru-ler',
+          answer: '尺',
+          hint: '畫直線時會用到。',
+          explain: 'a ruler 是一把尺。',
+          choices: ['尺', '雨傘', '早餐']
+        },
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'School Words',
+          word: 'classmate',
+          phonics: 'class-mate',
+          answer: '同學',
+          hint: '同一班的人。',
+          explain: 'my classmate 是我的同學。',
+          choices: ['同學', '晚餐', '車站']
+        },
+        {
+          level: 'kids',
+          topic: 'home',
+          title: 'Home Words',
+          word: 'bedroom',
+          phonics: 'bed-room',
+          answer: '臥室',
+          hint: '睡覺的房間。',
+          explain: 'bedroom 是臥室。',
+          choices: ['臥室', '圖書館', '牙齒']
+        },
+        {
+          level: 'kids',
+          topic: 'food',
+          title: 'Food Words',
+          word: 'breakfast',
+          phonics: 'break-fast',
+          answer: '早餐',
+          hint: '早上吃的一餐。',
+          explain: 'eat breakfast 是吃早餐。',
+          choices: ['早餐', '外套', '公園']
+        },
+        {
+          level: 'kids',
+          topic: 'weather',
+          title: 'Weather Words',
+          word: 'rainy',
+          phonics: 'rain-y',
+          answer: '下雨的',
+          hint: '需要雨傘的天氣。',
+          explain: 'a rainy day 是下雨天。',
+          choices: ['下雨的', '安靜的', '乾淨的']
+        },
+        {
+          level: 'kids',
+          topic: 'health',
+          title: 'Health Words',
+          word: 'headache',
+          phonics: 'head-ache',
+          answer: '頭痛',
+          hint: '頭不舒服。',
+          explain: 'have a headache 是頭痛。',
+          choices: ['頭痛', '市場', '鉛筆盒']
+        },
+        {
+          level: 'kids',
+          topic: 'places',
+          title: 'Place Words',
+          word: 'park',
+          phonics: 'park',
+          answer: '公園',
+          hint: '可以散步或玩球的地方。',
+          explain: 'go to the park 是去公園。',
+          choices: ['公園', '藥', '午餐']
+        }
+      ]
+    };
+
+    Object.keys(EXTRA_BANK).forEach((mode) => {
+      BANK[mode].push(...EXTRA_BANK[mode]);
+    });
+
     const ICONS = {
       speaker: '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Zm12.2 8.1l-1.4-1.4A5 5 0 0 0 16 12a5 5 0 0 0-1.2-3.2l1.4-1.4A7 7 0 0 1 18 12a7 7 0 0 1-1.8 5.1Zm2.7 2.7-1.4-1.4A9 9 0 0 0 20 12a9 9 0 0 0-2.5-6.3l1.4-1.4A11 11 0 0 1 22 12a11 11 0 0 1-3.1 7.8Z"/></svg>',
       check: '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m9 16.2-3.5-3.5L4 14.2l5 5L20.5 7.7 19 6.2z"/></svg>',
@@ -1339,6 +1639,7 @@
 
     const STORAGE_KEY = 'geptKidsEnglishLab.v1';
     const SESSION_LIMIT = 10;
+    const RECENT_LIMIT = 18;
     let state = {
       mode: 'listening',
       level: 'kids',
@@ -1346,6 +1647,9 @@
       current: null,
       selected: null,
       answered: false,
+      questionQueue: [],
+      queueKey: '',
+      recentIds: [],
       sessionTotal: 0,
       sessionCorrect: 0,
       stats: loadStats()
@@ -1412,13 +1716,45 @@
       });
     }
 
-    function pickQuestion() {
-      const available = getFilteredBank();
-      const bank = available.length ? available : BANK[state.mode];
+    function getActiveBank(mode = state.mode) {
+      const available = getFilteredBank(mode);
+      return available.length ? available : BANK[mode];
+    }
+
+    function getSessionLimit() {
+      return Math.max(1, Math.min(SESSION_LIMIT, getActiveBank().length));
+    }
+
+    function getBankKey() {
+      return `${state.mode}:${state.level}:${state.topic}:${getActiveBank().map(getQuestionId).join('|')}`;
+    }
+
+    function resetQuestionQueue() {
+      state.questionQueue = [];
+      state.queueKey = '';
+      state.recentIds = [];
+    }
+
+    function buildQuestionQueue() {
+      const activeBank = getActiveBank();
       const lastId = state.current && getQuestionId(state.current);
-      const candidates = bank.filter((item) => getQuestionId(item) !== lastId);
-      const pool = candidates.length ? candidates : bank;
-      state.current = pool[Math.floor(Math.random() * pool.length)];
+      const freshItems = activeBank.filter((item) => {
+        const id = getQuestionId(item);
+        return id !== lastId && !state.recentIds.includes(id);
+      });
+      const fallbackItems = activeBank.filter((item) => getQuestionId(item) !== lastId);
+      const source = freshItems.length ? freshItems : (fallbackItems.length ? fallbackItems : activeBank);
+      state.questionQueue = shuffle([...source]);
+      state.queueKey = getBankKey();
+    }
+
+    function pickQuestion() {
+      if (!state.questionQueue.length || state.queueKey !== getBankKey()) {
+        buildQuestionQueue();
+      }
+      state.current = state.questionQueue.shift();
+      const currentId = getQuestionId(state.current);
+      state.recentIds = [currentId, ...state.recentIds.filter((id) => id !== currentId)].slice(0, RECENT_LIMIT);
       state.selected = null;
       state.answered = false;
       renderQuestion();
@@ -1432,7 +1768,7 @@
       const mode = MODES.find((item) => item.id === state.mode);
       els.modeEyebrow.textContent = mode.skill;
       els.stageTitle.textContent = mode.label;
-      els.questionBadge.textContent = `Q${Math.min(state.sessionTotal + 1, SESSION_LIMIT)}`;
+      els.questionBadge.textContent = `Q${Math.min(state.sessionTotal + 1, getSessionLimit())}`;
       els.feedback.className = 'feedback';
       els.feedback.innerHTML = '';
       els.checkBtn.hidden = false;
@@ -1590,7 +1926,7 @@
     }
 
     function nextQuestion() {
-      if (state.sessionTotal >= SESSION_LIMIT) {
+      if (state.sessionTotal >= getSessionLimit()) {
         showSessionComplete();
         return;
       }
@@ -1598,11 +1934,12 @@
     }
 
     function showSessionComplete() {
-      const score = Math.round((state.sessionCorrect / SESSION_LIMIT) * 100);
+      const sessionLimit = getSessionLimit();
+      const score = Math.round((state.sessionCorrect / sessionLimit) * 100);
       els.promptArea.innerHTML = `
         <div class="question-block">
           <p class="eyebrow">Session Complete</p>
-          <p class="prompt-text">今天練習完成：${state.sessionCorrect} / ${SESSION_LIMIT} 題，${score} 分。</p>
+          <p class="prompt-text">今天練習完成：${state.sessionCorrect} / ${sessionLimit} 題，${score} 分。</p>
           <p class="support-text">可以換主題再做一輪，或明天繼續累積連續答對紀錄。</p>
         </div>
       `;
@@ -1614,9 +1951,10 @@
     }
 
     function renderProgress() {
-      const nextNumber = Math.min(state.sessionTotal + 1, SESSION_LIMIT);
-      const percent = Math.min(100, (state.sessionTotal / SESSION_LIMIT) * 100);
-      els.progressText.textContent = state.sessionTotal >= SESSION_LIMIT ? '今日 10 題完成' : `第 ${nextNumber} 題 / ${SESSION_LIMIT} 題`;
+      const sessionLimit = getSessionLimit();
+      const nextNumber = Math.min(state.sessionTotal + 1, sessionLimit);
+      const percent = Math.min(100, (state.sessionTotal / sessionLimit) * 100);
+      els.progressText.textContent = state.sessionTotal >= sessionLimit ? `本輪 ${sessionLimit} 題完成` : `第 ${nextNumber} 題 / ${sessionLimit} 題`;
       els.sessionScore.textContent = `${state.sessionCorrect * 10} 分`;
       els.progressBar.style.width = `${percent}%`;
     }
@@ -1686,6 +2024,7 @@
       state.stats = { total: 0, correct: 0, streak: 0, bestStreak: 0 };
       state.sessionTotal = 0;
       state.sessionCorrect = 0;
+      resetQuestionQueue();
       saveStats();
       renderStats();
       pickQuestion();
@@ -1698,6 +2037,7 @@
         state.mode = button.dataset.mode;
         state.sessionTotal = 0;
         state.sessionCorrect = 0;
+        resetQuestionQueue();
         pickQuestion();
       });
 
@@ -1705,6 +2045,7 @@
         state.level = els.levelSelect.value;
         state.sessionTotal = 0;
         state.sessionCorrect = 0;
+        resetQuestionQueue();
         pickQuestion();
       });
 
@@ -1712,6 +2053,7 @@
         state.topic = els.topicSelect.value;
         state.sessionTotal = 0;
         state.sessionCorrect = 0;
+        resetQuestionQueue();
         pickQuestion();
       });
 
