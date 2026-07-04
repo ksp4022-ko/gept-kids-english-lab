@@ -1,0 +1,1739 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GEPT Kids English Lab</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #21313c;
+      --muted: #60727f;
+      --line: #d8e3e6;
+      --panel: #ffffff;
+      --wash: #f5f8f4;
+      --mint: #2f8f83;
+      --mint-dark: #1f6f66;
+      --yellow: #f5b945;
+      --coral: #ef6f5e;
+      --blue: #2d6fb7;
+      --violet: #7663b6;
+      --shadow: 0 16px 40px rgba(36, 59, 69, .13);
+      --radius: 8px;
+      --focus: 0 0 0 4px rgba(47, 143, 131, .2);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--wash);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.9), rgba(245,248,244,.96) 52%, #eef5f6 100%),
+        var(--wash);
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    select:focus-visible,
+    input:focus-visible {
+      outline: none;
+      box-shadow: var(--focus);
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px clamp(16px, 4vw, 40px);
+      border-bottom: 1px solid rgba(33, 49, 60, .08);
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #21313c;
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 0;
+      box-shadow: 0 9px 18px rgba(33, 49, 60, .2);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: .86rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .icon-btn,
+    .pill-btn {
+      min-height: 40px;
+      border-radius: 8px;
+      color: var(--ink);
+      background: #eef5f1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
+    }
+
+    .icon-btn {
+      width: 40px;
+      padding: 0;
+    }
+
+    .pill-btn {
+      padding: 0 14px;
+      font-weight: 700;
+    }
+
+    .icon-btn:hover,
+    .pill-btn:hover {
+      transform: translateY(-1px);
+      background: #dfeee8;
+    }
+
+    .primary-btn {
+      color: #fff;
+      background: var(--mint);
+    }
+
+    .primary-btn:hover {
+      background: var(--mint-dark);
+    }
+
+    .danger-btn {
+      color: #fff;
+      background: var(--coral);
+    }
+
+    .danger-btn:hover {
+      background: #dc5948;
+    }
+
+    .layout {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 28px clamp(14px, 3vw, 28px) 36px;
+      display: grid;
+      grid-template-columns: minmax(250px, 320px) minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    .sidebar {
+      align-self: start;
+      position: sticky;
+      top: 88px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .panel,
+    .practice-stage,
+    .modal {
+      background: var(--panel);
+      border: 1px solid rgba(33, 49, 60, .09);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .hero-band {
+      overflow: hidden;
+      color: #fff;
+      background: #21313c;
+      min-height: 176px;
+      display: grid;
+      align-content: end;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero-art {
+      position: absolute;
+      inset: 0;
+      opacity: .92;
+      z-index: -1;
+    }
+
+    .hero-band h2 {
+      margin: 0;
+      padding: 18px 18px 4px;
+      font-size: 1.6rem;
+      line-height: 1.1;
+      letter-spacing: 0;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, .28);
+    }
+
+    .hero-band p {
+      margin: 0;
+      padding: 0 18px 18px;
+      color: rgba(255,255,255,.9);
+      font-size: .94rem;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, .25);
+    }
+
+    .mode-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f2f6f7;
+      color: var(--ink);
+      display: grid;
+      grid-template-columns: 38px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      text-align: left;
+      border: 1px solid transparent;
+    }
+
+    .mode-btn[aria-current="true"] {
+      background: #e8f4f1;
+      border-color: rgba(47, 143, 131, .28);
+    }
+
+    .mode-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .mode-btn:nth-child(2) .mode-icon {
+      background: var(--violet);
+    }
+
+    .mode-btn:nth-child(3) .mode-icon {
+      background: var(--coral);
+    }
+
+    .mode-text strong {
+      display: block;
+      font-size: .95rem;
+      line-height: 1.2;
+    }
+
+    .mode-text span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .stat {
+      min-height: 76px;
+      border-radius: 8px;
+      background: #f5f8f4;
+      border: 1px solid rgba(33, 49, 60, .08);
+      padding: 10px;
+      display: grid;
+      align-content: center;
+      gap: 2px;
+    }
+
+    .stat strong {
+      font-size: 1.35rem;
+      line-height: 1;
+      color: var(--mint-dark);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .focus-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .focus-list li {
+      display: grid;
+      grid-template-columns: 10px 1fr;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--yellow);
+    }
+
+    .dot.blue {
+      background: var(--blue);
+    }
+
+    .dot.coral {
+      background: var(--coral);
+    }
+
+    .main {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(33, 49, 60, .08);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    label.select-label {
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 700;
+    }
+
+    select {
+      min-height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      padding: 0 38px 0 12px;
+    }
+
+    .progress-wrap {
+      min-width: min(260px, 100%);
+      flex: 1 1 260px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      background: #dfe8ea;
+      overflow: hidden;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--mint), var(--yellow));
+      transition: width .25s ease;
+    }
+
+    .practice-stage {
+      min-height: 590px;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .stage-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(33, 49, 60, .08);
+      background: #fff;
+    }
+
+    .stage-title {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--mint-dark);
+      text-transform: uppercase;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .stage-title h2 {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      border-radius: 8px;
+      color: #fff;
+      background: #21313c;
+      font-weight: 800;
+      padding: 8px 10px;
+      font-size: .84rem;
+    }
+
+    .stage-body {
+      padding: 20px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .prompt-area {
+      display: grid;
+      gap: 14px;
+    }
+
+    .question-block {
+      display: grid;
+      gap: 10px;
+    }
+
+    .prompt-text {
+      margin: 0;
+      font-size: clamp(1.05rem, 2.1vw, 1.35rem);
+      line-height: 1.45;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .support-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .audio-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f4f8fa;
+      border: 1px dashed #c7d9dc;
+    }
+
+    .listen-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .listen-btn:hover {
+      transform: translateY(-1px);
+      background: #245e9d;
+    }
+
+    .caption-toggle {
+      margin-left: auto;
+    }
+
+    .hidden-caption {
+      display: none;
+      flex-basis: 100%;
+      color: var(--ink);
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      border: 1px solid rgba(33, 49, 60, .08);
+      font-weight: 700;
+    }
+
+    .hidden-caption.is-open {
+      display: block;
+    }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .picture-card {
+      min-height: 150px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background: #f8faf8;
+      padding: 10px;
+      display: grid;
+      grid-template-rows: 96px auto;
+      gap: 8px;
+      align-items: center;
+      color: var(--ink);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .picture-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(47, 143, 131, .35);
+      background: #eef7f4;
+    }
+
+    .picture-card[aria-pressed="true"],
+    .option-btn[aria-pressed="true"],
+    .match-choice[aria-pressed="true"] {
+      border-color: var(--mint);
+      background: #e5f5f1;
+    }
+
+    .mini-illustration {
+      width: 100%;
+      height: 96px;
+    }
+
+    .picture-card span {
+      font-weight: 800;
+      text-align: center;
+      font-size: .92rem;
+    }
+
+    .reading-passage {
+      padding: 18px;
+      border-radius: 8px;
+      background: #fff8e7;
+      border: 1px solid rgba(245, 185, 69, .35);
+      font-size: clamp(1rem, 2vw, 1.16rem);
+      line-height: 1.65;
+      color: #31404a;
+    }
+
+    .reading-passage p {
+      margin: 0;
+    }
+
+    .option-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-btn,
+    .match-choice {
+      width: 100%;
+      min-height: 54px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 12px 14px;
+      text-align: left;
+      color: var(--ink);
+      background: #f7fafb;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .option-btn:hover,
+    .match-choice:hover {
+      transform: translateY(-1px);
+      border-color: rgba(47, 143, 131, .32);
+    }
+
+    .option-letter {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #dfecef;
+      flex: 0 0 auto;
+    }
+
+    .match-board {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+      gap: 12px;
+    }
+
+    .word-bank,
+    .meaning-bank {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .match-word {
+      min-height: 72px;
+      border-radius: 8px;
+      background: #21313c;
+      color: #fff;
+      padding: 14px;
+      display: grid;
+      align-content: center;
+      gap: 2px;
+    }
+
+    .match-word strong {
+      font-size: 1.45rem;
+      line-height: 1.1;
+    }
+
+    .match-word span {
+      color: rgba(255,255,255,.78);
+      font-size: .86rem;
+    }
+
+    .feedback {
+      min-height: 64px;
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+    }
+
+    .feedback.is-open {
+      display: flex;
+    }
+
+    .feedback.good {
+      background: #e3f5ec;
+      color: #176448;
+    }
+
+    .feedback.try {
+      background: #fff0e4;
+      color: #9a412f;
+    }
+
+    .feedback small {
+      display: block;
+      margin-top: 2px;
+      color: inherit;
+      opacity: .82;
+      font-weight: 700;
+    }
+
+    .stage-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px 20px;
+      border-top: 1px solid rgba(33, 49, 60, .08);
+      background: #fbfdfc;
+    }
+
+    .answer-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .topic-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .topic {
+      min-height: 82px;
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      border: 1px solid rgba(33, 49, 60, .08);
+      display: grid;
+      align-content: center;
+      gap: 4px;
+    }
+
+    .topic strong {
+      font-size: .95rem;
+    }
+
+    .topic span {
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(20, 32, 38, .48);
+    }
+
+    .modal-backdrop.is-open {
+      display: grid;
+    }
+
+    .modal {
+      width: min(680px, 100%);
+      max-height: min(760px, 88vh);
+      overflow: auto;
+      padding: 20px;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      border-bottom: 1px solid rgba(33, 49, 60, .08);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal h2 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .modal h3 {
+      margin: 18px 0 8px;
+      font-size: 1.02rem;
+    }
+
+    .modal p,
+    .modal li {
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    .modal ul {
+      padding-left: 20px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sidebar .panel:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .top-actions .pill-btn {
+        flex: 1;
+      }
+
+      .brand p {
+        white-space: normal;
+      }
+
+      .sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-grid,
+      .topic-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .match-board {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-head,
+      .stage-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .answer-actions,
+      .stage-actions .pill-btn {
+        width: 100%;
+      }
+
+      .answer-actions .pill-btn {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .layout {
+        padding-inline: 10px;
+      }
+
+      .visual-grid,
+      .topic-strip,
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .picture-card {
+        grid-template-rows: 82px auto;
+        min-height: 132px;
+      }
+
+      .mini-illustration {
+        height: 82px;
+      }
+
+      .caption-toggle {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">GE</div>
+        <div>
+          <h1>GEPT Kids English Lab</h1>
+          <p>小學生英聽閱讀練習，銜接全民英檢初級</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="pill-btn" id="guideBtn" type="button" title="查看設計說明">說明</button>
+        <button class="pill-btn danger-btn" id="resetBtn" type="button" title="清除本機練習紀錄">重置紀錄</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar" aria-label="練習選單與進度">
+        <section class="panel hero-band" aria-labelledby="heroTitle">
+          <svg class="hero-art" viewBox="0 0 520 300" role="img" aria-label="孩子在教室用平板練習英文">
+            <defs>
+              <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#2d6fb7"/>
+                <stop offset=".58" stop-color="#2f8f83"/>
+                <stop offset="1" stop-color="#f5b945"/>
+              </linearGradient>
+            </defs>
+            <rect width="520" height="300" fill="url(#sky)"/>
+            <rect x="28" y="42" width="176" height="110" rx="8" fill="#fff8e7" opacity=".92"/>
+            <rect x="314" y="38" width="154" height="90" rx="8" fill="#e9f4ff" opacity=".9"/>
+            <circle cx="136" cy="196" r="42" fill="#ffcf89"/>
+            <path d="M78 280c10-54 34-78 70-78s61 24 72 78z" fill="#21313c"/>
+            <circle cx="145" cy="188" r="7" fill="#21313c"/>
+            <circle cx="119" cy="188" r="7" fill="#21313c"/>
+            <path d="M117 213c12 10 27 10 39 0" fill="none" stroke="#21313c" stroke-width="6" stroke-linecap="round"/>
+            <rect x="238" y="154" width="200" height="126" rx="12" fill="#ffffff"/>
+            <rect x="260" y="174" width="156" height="76" rx="8" fill="#f2f7f8"/>
+            <path d="M285 221h37l19-26 25 34 16-18 20 24H285z" fill="#2f8f83"/>
+            <circle cx="299" cy="194" r="10" fill="#f5b945"/>
+            <text x="52" y="83" fill="#21313c" font-size="26" font-weight="800">Listen</text>
+            <text x="52" y="120" fill="#21313c" font-size="26" font-weight="800">Read</text>
+            <text x="335" y="92" fill="#21313c" font-size="26" font-weight="800">A1 → A2</text>
+          </svg>
+          <h2 id="heroTitle">每天 10 題</h2>
+          <p>用校園、家庭、食物、天氣、健康等情境練習。</p>
+        </section>
+
+        <section class="panel" aria-labelledby="modeTitle">
+          <h2 class="sr-only" id="modeTitle">練習模式</h2>
+          <div class="mode-list" id="modeList"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="progressTitle">
+          <h2 class="sr-only" id="progressTitle">學習紀錄</h2>
+          <div class="stat-grid">
+            <div class="stat">
+              <strong id="totalDone">0</strong>
+              <span>已作答</span>
+            </div>
+            <div class="stat">
+              <strong id="accuracy">0%</strong>
+              <span>正確率</span>
+            </div>
+            <div class="stat">
+              <strong id="streak">0</strong>
+              <span>連續答對</span>
+            </div>
+          </div>
+          <ul class="focus-list">
+            <li><span class="dot"></span><span>字彙以基礎常用字與生活語句為主</span></li>
+            <li><span class="dot blue"></span><span>聽力使用瀏覽器語音，建議戴耳機</span></li>
+            <li><span class="dot coral"></span><span>答錯會顯示中文提示與關鍵單字</span></li>
+          </ul>
+        </section>
+      </aside>
+
+      <section class="main" aria-label="練習區">
+        <div class="toolbar">
+          <div class="toolbar-group">
+            <label class="select-label" for="levelSelect">程度</label>
+            <select id="levelSelect">
+              <option value="kids">小學英檢暖身 A1</option>
+              <option value="bridge">GEPT 初級銜接 A2</option>
+            </select>
+            <label class="select-label" for="topicSelect">主題</label>
+            <select id="topicSelect">
+              <option value="all">全部主題</option>
+              <option value="school">School</option>
+              <option value="home">Home</option>
+              <option value="food">Food</option>
+              <option value="weather">Weather</option>
+              <option value="health">Health</option>
+              <option value="places">Places</option>
+            </select>
+          </div>
+          <div class="progress-wrap" aria-label="今日進度">
+            <div class="progress-label">
+              <span id="progressText">第 1 題 / 10 題</span>
+              <span id="sessionScore">0 分</span>
+            </div>
+            <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+          </div>
+        </div>
+
+        <article class="practice-stage" aria-live="polite">
+          <header class="stage-head">
+            <div class="stage-title">
+              <p class="eyebrow" id="modeEyebrow">Listening</p>
+              <h2 id="stageTitle">聽句選圖</h2>
+            </div>
+            <div class="badge" id="questionBadge">Q1</div>
+          </header>
+          <div class="stage-body">
+            <div class="prompt-area" id="promptArea"></div>
+            <div class="feedback" id="feedback" role="status"></div>
+          </div>
+          <footer class="stage-actions">
+            <button class="pill-btn" id="skipBtn" type="button">換一題</button>
+            <div class="answer-actions">
+              <button class="pill-btn" id="hintBtn" type="button">提示</button>
+              <button class="pill-btn primary-btn" id="checkBtn" type="button">確認答案</button>
+              <button class="pill-btn primary-btn" id="nextBtn" type="button" hidden>下一題</button>
+            </div>
+          </footer>
+        </article>
+
+        <section class="topic-strip" aria-label="練習主題">
+          <div class="topic"><strong>Classroom</strong><span>指令、物品、同學互動</span></div>
+          <div class="topic"><strong>Daily Life</strong><span>家庭、時間、交通與活動</span></div>
+          <div class="topic"><strong>Health</strong><span>身體、感覺、看病情境</span></div>
+          <div class="topic"><strong>Notices</strong><span>短文、告示、個人訊息</span></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">Teacher Notes</p>
+          <h2 id="guideTitle">設計說明</h2>
+        </div>
+        <button class="icon-btn" id="closeGuideBtn" type="button" aria-label="關閉說明">X</button>
+      </div>
+      <p>這個練習工具以小學生熟悉的生活與校園情境為主，題型包含聽力是非/選擇、閱讀短文選擇、單字配對。內容採 A1 暖身到 GEPT 初級 A2 銜接，不使用官方試題原文。</p>
+      <h3>建議使用方式</h3>
+      <ul>
+        <li>低年級先選「小學英檢暖身 A1」，每天 6 到 10 題。</li>
+        <li>高年級或準備全民英檢初級者可選「GEPT 初級銜接 A2」。</li>
+        <li>聽力題可先不看字幕，答題後再開字幕核對。</li>
+        <li>老師可投影閱讀題，讓學生圈出關鍵字再作答。</li>
+      </ul>
+      <h3>內容範圍</h3>
+      <p>基礎常用字、簡易文法、日常短句、課堂指令、生活對話、告示與簡短個人訊息。</p>
+    </div>
+  </div>
+
+  <script>
+    const MODES = [
+      { id: 'listening', label: '聽句選圖', icon: '▶', skill: 'Listening', description: '短句、對話與圖片理解' },
+      { id: 'reading', label: '閱讀理解', icon: 'Aa', skill: 'Reading', description: '短文、告示與訊息判讀' },
+      { id: 'vocab', label: '單字配對', icon: '✓', skill: 'Words', description: '基礎字彙與中文意思' }
+    ];
+
+    const BANK = {
+      listening: [
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'Classroom Action',
+          prompt: 'Listen and choose the picture.',
+          audio: 'Please open your book to page ten.',
+          answer: 'book',
+          hint: '老師在說課本和頁碼。',
+          explain: 'open your book 是課堂常見指令。',
+          choices: [
+            { id: 'book', label: 'Open a book', scene: 'book' },
+            { id: 'soccer', label: 'Play soccer', scene: 'soccer' },
+            { id: 'lunch', label: 'Eat lunch', scene: 'lunch' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'food',
+          title: 'Lunch Time',
+          prompt: 'Listen and choose the picture.',
+          audio: 'The boy wants some noodles for lunch.',
+          answer: 'noodles',
+          hint: '注意 wants 和 noodles。',
+          explain: 'for lunch 表示午餐吃什麼。',
+          choices: [
+            { id: 'cake', label: 'A birthday cake', scene: 'cake' },
+            { id: 'noodles', label: 'Noodles', scene: 'noodles' },
+            { id: 'milk', label: 'Milk', scene: 'milk' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'weather',
+          title: 'Weather',
+          prompt: 'Listen and choose the picture.',
+          audio: 'It is rainy. Take your umbrella.',
+          answer: 'umbrella',
+          hint: '聽天氣和要帶的物品。',
+          explain: 'rainy 和 umbrella 常一起出現。',
+          choices: [
+            { id: 'sun', label: 'A sunny day', scene: 'sun' },
+            { id: 'umbrella', label: 'An umbrella', scene: 'umbrella' },
+            { id: 'snow', label: 'Snow', scene: 'snow' }
+          ]
+        },
+        {
+          level: 'bridge',
+          topic: 'health',
+          title: 'At the Nurse Office',
+          prompt: 'Listen and choose the best answer.',
+          audio: 'Mia has a toothache. She cannot eat the apple.',
+          answer: 'toothache',
+          hint: '注意身體不舒服的地方。',
+          explain: 'toothache 是牙痛，所以不能吃蘋果。',
+          choices: [
+            { id: 'toothache', label: 'She has a toothache.', scene: 'toothache' },
+            { id: 'sleepy', label: 'She is sleepy.', scene: 'sleepy' },
+            { id: 'running', label: 'She is running.', scene: 'running' }
+          ]
+        },
+        {
+          level: 'bridge',
+          topic: 'places',
+          title: 'After School',
+          prompt: 'Listen and choose the place.',
+          audio: 'After school, Ken goes to the library to read a storybook.',
+          answer: 'library',
+          hint: '聽 Ken 去哪裡，以及做什麼。',
+          explain: 'library 是圖書館，可以 read a storybook。',
+          choices: [
+            { id: 'market', label: 'Market', scene: 'market' },
+            { id: 'library', label: 'Library', scene: 'library' },
+            { id: 'park', label: 'Park', scene: 'park' }
+          ]
+        },
+        {
+          level: 'bridge',
+          topic: 'home',
+          title: 'Helping at Home',
+          prompt: 'Listen and choose what Dad asks.',
+          audio: 'Dad asks Leo to clean his room before dinner.',
+          answer: 'clean',
+          hint: '注意 Dad asks Leo to...',
+          explain: 'clean his room 是整理房間。',
+          choices: [
+            { id: 'clean', label: 'Clean his room', scene: 'clean' },
+            { id: 'watch', label: 'Watch TV', scene: 'watch' },
+            { id: 'sleep', label: 'Go to bed', scene: 'sleep' }
+          ]
+        }
+      ],
+      reading: [
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'A Classroom Notice',
+          passage: 'Class 302 will visit the school garden on Friday. Please bring a hat and a water bottle. We will meet at the classroom at 9:00.',
+          question: 'What should students bring?',
+          answer: 'hat-water',
+          hint: '找 Please bring 後面的物品。',
+          explain: '通知說 Please bring a hat and a water bottle.',
+          choices: [
+            { id: 'hat-water', text: 'A hat and a water bottle' },
+            { id: 'cake-card', text: 'A cake and a card' },
+            { id: 'bike-ball', text: 'A bike and a ball' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'home',
+          title: "Ben's Saturday",
+          passage: 'Ben gets up at seven on Saturday. He helps his mom make breakfast. In the afternoon, he plays basketball with his cousins.',
+          question: 'Who does Ben play basketball with?',
+          answer: 'cousins',
+          hint: '找 plays basketball with 後面的人。',
+          explain: '文章說 with his cousins。',
+          choices: [
+            { id: 'mom', text: 'His mom' },
+            { id: 'teacher', text: 'His teacher' },
+            { id: 'cousins', text: 'His cousins' }
+          ]
+        },
+        {
+          level: 'kids',
+          topic: 'food',
+          title: 'A Short Message',
+          passage: 'Hi Ruby, I am at the fruit shop. Do you want bananas or oranges? I can buy some for our picnic. From Lily',
+          question: 'Where is Lily?',
+          answer: 'fruit-shop',
+          hint: '第一句說 I am at...',
+          explain: 'I am at the fruit shop 表示 Lily 在水果店。',
+          choices: [
+            { id: 'fruit-shop', text: 'At the fruit shop' },
+            { id: 'bookstore', text: 'At the bookstore' },
+            { id: 'classroom', text: 'In the classroom' }
+          ]
+        },
+        {
+          level: 'bridge',
+          topic: 'weather',
+          title: 'Field Trip Plan',
+          passage: 'The weather report says it will be cloudy in the morning and rainy after lunch. The zoo trip will start at 8:30. Students should wear comfortable shoes and bring a raincoat.',
+          question: 'Why should students bring a raincoat?',
+          answer: 'rainy',
+          hint: '找天氣預報 lunch 後面的狀況。',
+          explain: 'It will be rainy after lunch，所以需要 raincoat。',
+          choices: [
+            { id: 'cold', text: 'It will be very cold.' },
+            { id: 'rainy', text: 'It will rain after lunch.' },
+            { id: 'hot', text: 'It will be sunny and hot.' }
+          ]
+        },
+        {
+          level: 'bridge',
+          topic: 'places',
+          title: 'Library Rules',
+          passage: 'Welcome to Green Library. You can borrow three books for two weeks. Please keep quiet and do not eat in the reading room.',
+          question: 'Which is true?',
+          answer: 'quiet',
+          hint: '注意規則中 Please 開頭的句子。',
+          explain: '圖書館規則要求 keep quiet。',
+          choices: [
+            { id: 'quiet', text: 'Readers should keep quiet.' },
+            { id: 'five', text: 'Readers can borrow five books.' },
+            { id: 'eat', text: 'Readers can eat in the reading room.' }
+          ]
+        },
+        {
+          level: 'bridge',
+          topic: 'health',
+          title: 'A Note to Teacher',
+          passage: "Dear Ms. Wang, Tom has a fever today. He will stay home and drink warm water. He cannot go to the music show this afternoon. From Tom's dad",
+          question: 'Why will Tom stay home?',
+          answer: 'fever',
+          hint: '找 Tom 今天怎麼了。',
+          explain: 'Tom has a fever，所以今天在家休息。',
+          choices: [
+            { id: 'fever', text: 'He has a fever.' },
+            { id: 'music', text: 'He needs music practice.' },
+            { id: 'water', text: 'He lost his water bottle.' }
+          ]
+        }
+      ],
+      vocab: [
+        {
+          level: 'kids',
+          topic: 'school',
+          title: 'School Words',
+          word: 'borrow',
+          phonics: 'bor-row',
+          answer: '借用',
+          hint: '在圖書館常會做這件事。',
+          explain: 'borrow a book 表示借一本書。',
+          choices: ['借用', '關燈', '跳舞']
+        },
+        {
+          level: 'kids',
+          topic: 'food',
+          title: 'Food Words',
+          word: 'thirsty',
+          phonics: 'thirs-ty',
+          answer: '口渴的',
+          hint: '想喝水時的感覺。',
+          explain: 'I am thirsty. 表示我口渴了。',
+          choices: ['口渴的', '安靜的', '昂貴的']
+        },
+        {
+          level: 'kids',
+          topic: 'home',
+          title: 'Home Words',
+          word: 'clean',
+          phonics: 'clean',
+          answer: '打掃；乾淨的',
+          hint: '整理房間或讓東西不髒。',
+          explain: 'clean your room 是打掃你的房間。',
+          choices: ['打掃；乾淨的', '畫畫', '生氣的']
+        },
+        {
+          level: 'bridge',
+          topic: 'places',
+          title: 'Place Words',
+          word: 'station',
+          phonics: 'sta-tion',
+          answer: '車站',
+          hint: '搭火車或公車會去的地方。',
+          explain: 'train station 是火車站。',
+          choices: ['車站', '雨衣', '牙痛']
+        },
+        {
+          level: 'bridge',
+          topic: 'weather',
+          title: 'Weather Words',
+          word: 'cloudy',
+          phonics: 'cloud-y',
+          answer: '多雲的',
+          hint: '天空有很多雲。',
+          explain: 'It is cloudy today. 表示今天多雲。',
+          choices: ['多雲的', '健康的', '遲到的']
+        },
+        {
+          level: 'bridge',
+          topic: 'health',
+          title: 'Health Words',
+          word: 'medicine',
+          phonics: 'med-i-cine',
+          answer: '藥',
+          hint: '生病時可能會吃。',
+          explain: 'Take some medicine. 表示吃藥。',
+          choices: ['藥', '明信片', '操場']
+        }
+      ]
+    };
+
+    const ICONS = {
+      speaker: '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Zm12.2 8.1l-1.4-1.4A5 5 0 0 0 16 12a5 5 0 0 0-1.2-3.2l1.4-1.4A7 7 0 0 1 18 12a7 7 0 0 1-1.8 5.1Zm2.7 2.7-1.4-1.4A9 9 0 0 0 20 12a9 9 0 0 0-2.5-6.3l1.4-1.4A11 11 0 0 1 22 12a11 11 0 0 1-3.1 7.8Z"/></svg>',
+      check: '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m9 16.2-3.5-3.5L4 14.2l5 5L20.5 7.7 19 6.2z"/></svg>',
+      info: '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 17h2v-6h-2v6Zm1-14a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 16a7 7 0 1 1 0-14 7 7 0 0 1 0 14Zm-1-10h2V7h-2v2Z"/></svg>'
+    };
+
+    const STORAGE_KEY = 'geptKidsEnglishLab.v1';
+    const SESSION_LIMIT = 10;
+    let state = {
+      mode: 'listening',
+      level: 'kids',
+      topic: 'all',
+      current: null,
+      selected: null,
+      answered: false,
+      sessionTotal: 0,
+      sessionCorrect: 0,
+      stats: loadStats()
+    };
+
+    const els = {
+      modeList: document.getElementById('modeList'),
+      levelSelect: document.getElementById('levelSelect'),
+      topicSelect: document.getElementById('topicSelect'),
+      promptArea: document.getElementById('promptArea'),
+      feedback: document.getElementById('feedback'),
+      checkBtn: document.getElementById('checkBtn'),
+      nextBtn: document.getElementById('nextBtn'),
+      skipBtn: document.getElementById('skipBtn'),
+      hintBtn: document.getElementById('hintBtn'),
+      modeEyebrow: document.getElementById('modeEyebrow'),
+      stageTitle: document.getElementById('stageTitle'),
+      questionBadge: document.getElementById('questionBadge'),
+      progressText: document.getElementById('progressText'),
+      sessionScore: document.getElementById('sessionScore'),
+      progressBar: document.getElementById('progressBar'),
+      totalDone: document.getElementById('totalDone'),
+      accuracy: document.getElementById('accuracy'),
+      streak: document.getElementById('streak'),
+      guideBtn: document.getElementById('guideBtn'),
+      guideModal: document.getElementById('guideModal'),
+      closeGuideBtn: document.getElementById('closeGuideBtn'),
+      resetBtn: document.getElementById('resetBtn')
+    };
+
+    function loadStats() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        return {
+          total: Number(stored.total) || 0,
+          correct: Number(stored.correct) || 0,
+          streak: Number(stored.streak) || 0,
+          bestStreak: Number(stored.bestStreak) || 0
+        };
+      } catch (error) {
+        return { total: 0, correct: 0, streak: 0, bestStreak: 0 };
+      }
+    }
+
+    function saveStats() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.stats));
+    }
+
+    function renderModeList() {
+      els.modeList.innerHTML = MODES.map((mode) => `
+        <button class="mode-btn" type="button" data-mode="${mode.id}" aria-current="${state.mode === mode.id}">
+          <span class="mode-icon" aria-hidden="true">${mode.icon}</span>
+          <span class="mode-text"><strong>${mode.label}</strong><span>${mode.description}</span></span>
+          <span class="count">${getFilteredBank(mode.id).length} 題</span>
+        </button>
+      `).join('');
+    }
+
+    function getFilteredBank(mode = state.mode) {
+      return BANK[mode].filter((item) => {
+        const levelOk = item.level === state.level || (state.level === 'bridge' && item.level === 'kids');
+        const topicOk = state.topic === 'all' || item.topic === state.topic;
+        return levelOk && topicOk;
+      });
+    }
+
+    function pickQuestion() {
+      const available = getFilteredBank();
+      const bank = available.length ? available : BANK[state.mode];
+      const lastId = state.current && getQuestionId(state.current);
+      const candidates = bank.filter((item) => getQuestionId(item) !== lastId);
+      const pool = candidates.length ? candidates : bank;
+      state.current = pool[Math.floor(Math.random() * pool.length)];
+      state.selected = null;
+      state.answered = false;
+      renderQuestion();
+    }
+
+    function getQuestionId(item) {
+      return `${item.title}:${item.answer || item.word}`;
+    }
+
+    function renderQuestion() {
+      const mode = MODES.find((item) => item.id === state.mode);
+      els.modeEyebrow.textContent = mode.skill;
+      els.stageTitle.textContent = mode.label;
+      els.questionBadge.textContent = `Q${Math.min(state.sessionTotal + 1, SESSION_LIMIT)}`;
+      els.feedback.className = 'feedback';
+      els.feedback.innerHTML = '';
+      els.checkBtn.hidden = false;
+      els.nextBtn.hidden = true;
+      els.checkBtn.disabled = false;
+
+      if (state.mode === 'listening') renderListening();
+      if (state.mode === 'reading') renderReading();
+      if (state.mode === 'vocab') renderVocab();
+      renderProgress();
+      renderModeList();
+    }
+
+    function renderListening() {
+      const item = state.current;
+      els.promptArea.innerHTML = `
+        <div class="question-block">
+          <p class="eyebrow">${item.title}</p>
+          <p class="prompt-text">${item.prompt}</p>
+        </div>
+        <div class="audio-line">
+          <button class="listen-btn" type="button" id="listenBtn" aria-label="播放英文句子">${ICONS.speaker}</button>
+          <p class="support-text">播放兩次，先聽關鍵字再選圖。</p>
+          <button class="pill-btn caption-toggle" type="button" id="captionBtn">字幕</button>
+          <div class="hidden-caption" id="captionText">${item.audio}</div>
+        </div>
+        <div class="visual-grid">
+          ${item.choices.map((choice) => `
+            <button class="picture-card" type="button" data-answer="${choice.id}" aria-pressed="false">
+              ${drawScene(choice.scene)}
+              <span>${choice.label}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById('listenBtn').addEventListener('click', () => speak(item.audio));
+      document.getElementById('captionBtn').addEventListener('click', () => {
+        document.getElementById('captionText').classList.toggle('is-open');
+      });
+      els.promptArea.querySelectorAll('[data-answer]').forEach((btn) => {
+        btn.addEventListener('click', () => selectAnswer(btn.dataset.answer));
+      });
+      window.setTimeout(() => speak(item.audio), 250);
+    }
+
+    function renderReading() {
+      const item = state.current;
+      els.promptArea.innerHTML = `
+        <div class="question-block">
+          <p class="eyebrow">${item.title}</p>
+          <p class="prompt-text">${item.question}</p>
+        </div>
+        <div class="reading-passage"><p>${item.passage}</p></div>
+        <div class="option-grid">
+          ${item.choices.map((choice, index) => `
+            <button class="option-btn" type="button" data-answer="${choice.id}" aria-pressed="false">
+              <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+              <span>${choice.text}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+      els.promptArea.querySelectorAll('[data-answer]').forEach((btn) => {
+        btn.addEventListener('click', () => selectAnswer(btn.dataset.answer));
+      });
+    }
+
+    function renderVocab() {
+      const item = state.current;
+      const choices = shuffle([...item.choices]);
+      els.promptArea.innerHTML = `
+        <div class="question-block">
+          <p class="eyebrow">${item.title}</p>
+          <p class="prompt-text">Choose the meaning of this word.</p>
+        </div>
+        <div class="match-board">
+          <div class="word-bank">
+            <button class="listen-btn" type="button" id="wordListenBtn" aria-label="播放單字">${ICONS.speaker}</button>
+            <div class="match-word">
+              <strong>${item.word}</strong>
+              <span>${item.phonics}</span>
+            </div>
+          </div>
+          <div class="meaning-bank">
+            ${choices.map((choice) => `
+              <button class="match-choice" type="button" data-answer="${choice}" aria-pressed="false">
+                <span>${choice}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      document.getElementById('wordListenBtn').addEventListener('click', () => speak(item.word));
+      els.promptArea.querySelectorAll('[data-answer]').forEach((btn) => {
+        btn.addEventListener('click', () => selectAnswer(btn.dataset.answer));
+      });
+      window.setTimeout(() => speak(item.word), 250);
+    }
+
+    function selectAnswer(value) {
+      if (state.answered) return;
+      state.selected = value;
+      els.promptArea.querySelectorAll('[data-answer]').forEach((btn) => {
+        btn.setAttribute('aria-pressed', String(btn.dataset.answer === value));
+      });
+    }
+
+    function checkAnswer() {
+      if (state.answered) return;
+      if (!state.selected) {
+        showFeedback(false, '先選一個答案。', '可以按「提示」看關鍵字。');
+        return;
+      }
+
+      const correct = state.selected === state.current.answer;
+      state.answered = true;
+      state.sessionTotal += 1;
+      state.stats.total += 1;
+
+      if (correct) {
+        state.sessionCorrect += 1;
+        state.stats.correct += 1;
+        state.stats.streak += 1;
+        state.stats.bestStreak = Math.max(state.stats.bestStreak, state.stats.streak);
+        showFeedback(true, '答對了！', state.current.explain);
+      } else {
+        state.stats.streak = 0;
+        showFeedback(false, '再想想這個重點。', state.current.explain);
+        markCorrectAnswer();
+      }
+
+      saveStats();
+      els.checkBtn.hidden = true;
+      els.nextBtn.hidden = false;
+      renderProgress();
+      renderStats();
+    }
+
+    function markCorrectAnswer() {
+      els.promptArea.querySelectorAll('[data-answer]').forEach((btn) => {
+        if (btn.dataset.answer === state.current.answer) {
+          btn.style.borderColor = 'var(--coral)';
+          btn.style.background = '#fff0e4';
+        }
+      });
+    }
+
+    function showHint() {
+      showFeedback(false, '提示', state.current.hint);
+    }
+
+    function showFeedback(good, title, text) {
+      els.feedback.className = `feedback is-open ${good ? 'good' : 'try'}`;
+      els.feedback.innerHTML = `${good ? ICONS.check : ICONS.info}<span>${title}<small>${text}</small></span>`;
+    }
+
+    function nextQuestion() {
+      if (state.sessionTotal >= SESSION_LIMIT) {
+        showSessionComplete();
+        return;
+      }
+      pickQuestion();
+    }
+
+    function showSessionComplete() {
+      const score = Math.round((state.sessionCorrect / SESSION_LIMIT) * 100);
+      els.promptArea.innerHTML = `
+        <div class="question-block">
+          <p class="eyebrow">Session Complete</p>
+          <p class="prompt-text">今天練習完成：${state.sessionCorrect} / ${SESSION_LIMIT} 題，${score} 分。</p>
+          <p class="support-text">可以換主題再做一輪，或明天繼續累積連續答對紀錄。</p>
+        </div>
+      `;
+      els.feedback.className = 'feedback is-open good';
+      els.feedback.innerHTML = `${ICONS.check}<span>完成練習<small>建議把答錯題的關鍵字念三次，再重新挑戰。</small></span>`;
+      els.checkBtn.hidden = true;
+      els.nextBtn.hidden = true;
+      renderProgress();
+    }
+
+    function renderProgress() {
+      const nextNumber = Math.min(state.sessionTotal + 1, SESSION_LIMIT);
+      const percent = Math.min(100, (state.sessionTotal / SESSION_LIMIT) * 100);
+      els.progressText.textContent = state.sessionTotal >= SESSION_LIMIT ? '今日 10 題完成' : `第 ${nextNumber} 題 / ${SESSION_LIMIT} 題`;
+      els.sessionScore.textContent = `${state.sessionCorrect * 10} 分`;
+      els.progressBar.style.width = `${percent}%`;
+    }
+
+    function renderStats() {
+      const accuracy = state.stats.total ? Math.round((state.stats.correct / state.stats.total) * 100) : 0;
+      els.totalDone.textContent = state.stats.total;
+      els.accuracy.textContent = `${accuracy}%`;
+      els.streak.textContent = state.stats.streak;
+    }
+
+    function speak(text) {
+      if (!('speechSynthesis' in window)) {
+        showFeedback(false, '此瀏覽器無法播放語音。', '請改用 Chrome、Edge 或 Safari。');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const first = new SpeechSynthesisUtterance(text);
+      const second = new SpeechSynthesisUtterance(text);
+      const voices = window.speechSynthesis.getVoices();
+      const englishVoice = voices.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith('en-us'))
+        || voices.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith('en'));
+      [first, second].forEach((utterance) => {
+        utterance.lang = 'en-US';
+        utterance.rate = state.level === 'kids' ? 0.76 : 0.84;
+        utterance.pitch = 1.05;
+        if (englishVoice) utterance.voice = englishVoice;
+      });
+      first.onend = () => window.setTimeout(() => window.speechSynthesis.speak(second), 350);
+      window.speechSynthesis.speak(first);
+    }
+
+    function shuffle(items) {
+      return items.map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map((item) => item.value);
+    }
+
+    function drawScene(scene) {
+      const common = 'viewBox="0 0 180 100" class="mini-illustration" role="img" aria-hidden="true"';
+      const base = `<rect x="4" y="4" width="172" height="92" rx="8" fill="#e9f4ff"/><rect x="0" y="72" width="180" height="28" fill="#d8ebd9"/>`;
+      const scenes = {
+        book: `${base}<rect x="42" y="28" width="42" height="42" rx="4" fill="#fff"/><rect x="86" y="28" width="42" height="42" rx="4" fill="#fff"/><path d="M86 30v40" stroke="#2d6fb7" stroke-width="3"/><path d="M50 42h25M50 52h25M96 42h24M96 52h24" stroke="#ef6f5e" stroke-width="3"/>`,
+        soccer: `${base}<circle cx="90" cy="57" r="24" fill="#fff"/><path d="M90 33l11 9-4 13H83l-4-13zM66 57h20M94 57h20M76 78l8-23M104 78l-8-23" fill="none" stroke="#21313c" stroke-width="3"/>`,
+        lunch: `${base}<rect x="50" y="42" width="80" height="30" rx="15" fill="#fff"/><circle cx="77" cy="56" r="9" fill="#f5b945"/><circle cx="101" cy="56" r="9" fill="#2f8f83"/><path d="M134 38v40M145 38v40M134 50h11" stroke="#21313c" stroke-width="4" stroke-linecap="round"/>`,
+        cake: `${base}<rect x="54" y="54" width="72" height="28" rx="6" fill="#ef6f5e"/><rect x="62" y="40" width="56" height="18" rx="5" fill="#fff8e7"/><path d="M74 39V26M90 39V26M106 39V26" stroke="#21313c" stroke-width="4"/><circle cx="74" cy="24" r="4" fill="#f5b945"/><circle cx="90" cy="24" r="4" fill="#f5b945"/><circle cx="106" cy="24" r="4" fill="#f5b945"/>`,
+        noodles: `${base}<path d="M52 52h76l-10 28H62z" fill="#fff"/><path d="M62 53c8 14 48 14 56 0" fill="none" stroke="#ef6f5e" stroke-width="4"/><path d="M69 42c8-8 17 8 25 0s17 8 26 0" fill="none" stroke="#f5b945" stroke-width="5" stroke-linecap="round"/><path d="M130 35l22 22" stroke="#21313c" stroke-width="5" stroke-linecap="round"/>`,
+        milk: `${base}<rect x="68" y="30" width="44" height="54" rx="4" fill="#fff"/><path d="M68 30l12-14h32v68H68z" fill="#f8fdff" stroke="#2d6fb7" stroke-width="3"/><text x="76" y="62" fill="#2d6fb7" font-size="15" font-weight="800">MILK</text>`,
+        sun: `${base}<circle cx="92" cy="42" r="20" fill="#f5b945"/><path d="M92 11v13M92 60v13M61 42H48M136 42h-13M70 20l9 9M114 56l9 9M70 64l9-9M114 28l9-9" stroke="#f5b945" stroke-width="5" stroke-linecap="round"/>`,
+        umbrella: `${base}<path d="M48 51a42 42 0 0 1 84 0z" fill="#ef6f5e"/><path d="M90 50v31c0 11 20 11 20 0" fill="none" stroke="#21313c" stroke-width="6" stroke-linecap="round"/><path d="M48 51c12-10 24-10 36 0 12-10 24-10 48 0" fill="none" stroke="#fff" stroke-width="4"/>`,
+        snow: `${base}<path d="M90 22v52M66 35l48 28M114 35 66 63M72 22l18 15 18-15M72 76l18-15 18 15" stroke="#2d6fb7" stroke-width="5" stroke-linecap="round"/>`,
+        toothache: `${base}<circle cx="90" cy="47" r="25" fill="#ffcf89"/><circle cx="81" cy="43" r="4" fill="#21313c"/><circle cx="100" cy="43" r="4" fill="#21313c"/><path d="M80 63c7-8 19-8 26 0" stroke="#21313c" stroke-width="4" fill="none"/><path d="M118 57c13-5 17 12 5 18-8-4-15-11-5-18z" fill="#fff" stroke="#2d6fb7" stroke-width="3"/>`,
+        sleepy: `${base}<rect x="48" y="52" width="84" height="27" rx="8" fill="#fff"/><circle cx="68" cy="45" r="18" fill="#ffcf89"/><text x="108" y="35" fill="#2d6fb7" font-size="20" font-weight="800">Zz</text><path d="M59 45h18" stroke="#21313c" stroke-width="4"/>`,
+        running: `${base}<circle cx="82" cy="30" r="12" fill="#ffcf89"/><path d="M82 43l16 20 26 2M92 55 70 76M83 45 60 56M93 55l4-25" fill="none" stroke="#21313c" stroke-width="6" stroke-linecap="round"/>`,
+        market: `${base}<rect x="42" y="37" width="96" height="45" fill="#fff"/><path d="M36 37h108l-12-18H48z" fill="#ef6f5e"/><path d="M54 57h18M82 57h18M110 57h18" stroke="#2f8f83" stroke-width="8" stroke-linecap="round"/>`,
+        library: `${base}<rect x="48" y="24" width="84" height="60" fill="#fff"/><rect x="56" y="35" width="14" height="38" fill="#2d6fb7"/><rect x="76" y="35" width="14" height="38" fill="#ef6f5e"/><rect x="96" y="35" width="14" height="38" fill="#f5b945"/><rect x="116" y="35" width="8" height="38" fill="#2f8f83"/>`,
+        park: `${base}<rect x="84" y="44" width="12" height="38" fill="#7b5636"/><circle cx="90" cy="34" r="24" fill="#2f8f83"/><path d="M42 80h96" stroke="#21313c" stroke-width="5"/><path d="M52 58v22M128 58v22M52 58h76" stroke="#21313c" stroke-width="4"/>`,
+        clean: `${base}<rect x="52" y="52" width="62" height="32" rx="5" fill="#fff"/><path d="M122 24l18 58M126 36l-32 12" stroke="#21313c" stroke-width="6" stroke-linecap="round"/><path d="M62 34h22M58 42h30" stroke="#2d6fb7" stroke-width="4" stroke-linecap="round"/>`,
+        watch: `${base}<rect x="48" y="29" width="84" height="50" rx="6" fill="#21313c"/><rect x="56" y="37" width="68" height="34" fill="#e9f4ff"/><path d="M78 84h24M90 79v10" stroke="#21313c" stroke-width="5" stroke-linecap="round"/>`,
+        sleep: `${base}<rect x="44" y="51" width="92" height="30" rx="8" fill="#fff"/><rect x="50" y="43" width="36" height="22" rx="8" fill="#ffcf89"/><path d="M86 51h49v30H58" fill="#2d6fb7"/><text x="117" y="36" fill="#2d6fb7" font-size="20" font-weight="800">Zz</text>`
+      };
+      return `<svg ${common}>${scenes[scene] || scenes.book}</svg>`;
+    }
+
+    function resetRecords() {
+      if (!confirm('要清除本機練習紀錄嗎？')) return;
+      state.stats = { total: 0, correct: 0, streak: 0, bestStreak: 0 };
+      state.sessionTotal = 0;
+      state.sessionCorrect = 0;
+      saveStats();
+      renderStats();
+      pickQuestion();
+    }
+
+    function bindEvents() {
+      els.modeList.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-mode]');
+        if (!button) return;
+        state.mode = button.dataset.mode;
+        state.sessionTotal = 0;
+        state.sessionCorrect = 0;
+        pickQuestion();
+      });
+
+      els.levelSelect.addEventListener('change', () => {
+        state.level = els.levelSelect.value;
+        state.sessionTotal = 0;
+        state.sessionCorrect = 0;
+        pickQuestion();
+      });
+
+      els.topicSelect.addEventListener('change', () => {
+        state.topic = els.topicSelect.value;
+        state.sessionTotal = 0;
+        state.sessionCorrect = 0;
+        pickQuestion();
+      });
+
+      els.checkBtn.addEventListener('click', checkAnswer);
+      els.nextBtn.addEventListener('click', nextQuestion);
+      els.skipBtn.addEventListener('click', pickQuestion);
+      els.hintBtn.addEventListener('click', showHint);
+      els.guideBtn.addEventListener('click', () => els.guideModal.classList.add('is-open'));
+      els.closeGuideBtn.addEventListener('click', () => els.guideModal.classList.remove('is-open'));
+      els.guideModal.addEventListener('click', (event) => {
+        if (event.target === els.guideModal) els.guideModal.classList.remove('is-open');
+      });
+      els.resetBtn.addEventListener('click', resetRecords);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') els.guideModal.classList.remove('is-open');
+      });
+    }
+
+    bindEvents();
+    renderStats();
+    renderModeList();
+    pickQuestion();
+  </script>
+</body>
+</html>
