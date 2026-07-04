@@ -982,6 +982,13 @@
               <option value="health">Health</option>
               <option value="places">Places</option>
             </select>
+            <label class="select-label" for="difficultySelect">難度</label>
+            <select id="difficultySelect">
+              <option value="all">全部難度</option>
+              <option value="easy">A1 基礎</option>
+              <option value="medium">進階句型</option>
+              <option value="hard">A2 挑戰</option>
+            </select>
           </div>
           <div class="progress-wrap" aria-label="今日進度">
             <div class="progress-label">
@@ -1602,9 +1609,23 @@
       BANK[mode].push(...EXTRA_BANK[mode]);
     });
 
-    const TARGET_QUESTIONS_PER_MODE = 100;
+    const TARGET_QUESTIONS_PER_MODE = 800;
     const STUDENT_NAMES = ['Amy', 'Ben', 'Cindy', 'David', 'Emma', 'Jack', 'Lisa', 'Ryan'];
     const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    const TIME_PHRASES = ['today', 'on Monday', 'on Tuesday', 'after school', 'before dinner', 'after lunch', 'in the morning', 'in the afternoon', 'at seven o clock', 'every Friday'];
+    const PLACE_PHRASES = ['in class', 'at home', 'near the window', 'with a friend', 'with her brother', 'with his sister', 'at school', 'in the park'];
+    const READING_DETAILS = [
+      'The note is short and easy to read.',
+      'The teacher writes the time on the board.',
+      'The children talk about it after class.',
+      'The family checks the plan together.',
+      'The student puts the things in a blue bag.',
+      'Everyone says thank you at the end.',
+      'The weather is good in the morning.',
+      'The place is not far from school.',
+      'The activity takes about ten minutes.',
+      'The message is for young students.'
+    ];
     const SCENE_LABELS = {
       book: 'School things',
       soccer: 'Play soccer',
@@ -1851,6 +1872,33 @@
       ['picnic', '野餐', 'places', 'pic-nic'], ['movie', '電影', 'home', 'mov-ie'], ['music', '音樂', 'school', 'mu-sic']
     ];
 
+    const VOCAB_ADJECTIVES = [
+      ['big', '大的'], ['small', '小的'], ['red', '紅色的'], ['blue', '藍色的'], ['green', '綠色的'],
+      ['yellow', '黃色的'], ['new', '新的'], ['old', '舊的'], ['clean', '乾淨的'], ['dirty', '髒的'],
+      ['happy', '快樂的'], ['sad', '難過的'], ['fast', '快的'], ['slow', '慢的'], ['long', '長的'],
+      ['short', '短的'], ['hot', '熱的'], ['cold', '冷的'], ['warm', '溫暖的'], ['cool', '涼爽的']
+    ];
+    const VOCAB_NOUNS = [
+      ['book', '書', 'school'], ['bag', '書包', 'school'], ['desk', '書桌', 'school'], ['chair', '椅子', 'school'],
+      ['pencil', '鉛筆', 'school'], ['ruler', '尺', 'school'], ['notebook', '筆記本', 'school'], ['classroom', '教室', 'school'],
+      ['apple', '蘋果', 'food'], ['banana', '香蕉', 'food'], ['orange', '柳橙', 'food'], ['cake', '蛋糕', 'food'],
+      ['sandwich', '三明治', 'food'], ['egg', '蛋', 'food'], ['bread', '麵包', 'food'], ['lunch box', '便當盒', 'food'],
+      ['room', '房間', 'home'], ['table', '桌子', 'home'], ['window', '窗戶', 'home'], ['door', '門', 'home'],
+      ['kitchen', '廚房', 'home'], ['garden', '花園', 'home'], ['bed', '床', 'home'], ['cup', '杯子', 'home'],
+      ['hat', '帽子', 'weather'], ['jacket', '外套', 'weather'], ['umbrella', '雨傘', 'weather'], ['boots', '靴子', 'weather'],
+      ['day', '日子', 'weather'], ['morning', '早晨', 'weather'], ['sky', '天空', 'weather'], ['cloud', '雲', 'weather'],
+      ['hand', '手', 'health'], ['foot', '腳', 'health'], ['eye', '眼睛', 'health'], ['ear', '耳朵', 'health'],
+      ['doctor', '醫生', 'health'], ['nurse', '護理師', 'health'], ['medicine', '藥', 'health'], ['water bottle', '水壺', 'health'],
+      ['park', '公園', 'places'], ['library', '圖書館', 'places'], ['market', '市場', 'places'], ['zoo', '動物園', 'places'],
+      ['shop', '商店', 'places'], ['station', '車站', 'places'], ['street', '街道', 'places'], ['bus', '公車', 'places']
+    ];
+    const VOCAB_ACTIONS = [
+      ['read', '閱讀'], ['write', '寫'], ['draw', '畫'], ['listen to', '聽'], ['speak to', '和...說話'],
+      ['bring', '帶來'], ['borrow', '借用'], ['clean', '打掃'], ['wash', '清洗'], ['cook', '煮'],
+      ['eat', '吃'], ['drink', '喝'], ['buy', '買'], ['visit', '參觀'], ['walk to', '走去'],
+      ['run in', '在...跑步'], ['play with', '和...玩'], ['look at', '看著'], ['put away', '收好'], ['take', '拿']
+    ];
+
     function makePictureChoices(answerScene, index) {
       const scenes = Object.keys(SCENE_LABELS);
       const distractors = scenes.filter((scene) => scene !== answerScene);
@@ -1863,18 +1911,31 @@
       }));
     }
 
+    function getGeneratedDifficulty(index) {
+      const bucket = index % 12;
+      if (bucket < 5) return 'easy';
+      if (bucket < 9) return 'medium';
+      return 'hard';
+    }
+
     function addGeneratedListeningQuestions() {
       let index = 0;
       while (BANK.listening.length < TARGET_QUESTIONS_PER_MODE) {
         const pattern = LISTENING_PATTERNS[index % LISTENING_PATTERNS.length];
         const name = STUDENT_NAMES[index % STUDENT_NAMES.length];
+        const timePhrase = TIME_PHRASES[Math.floor(index / LISTENING_PATTERNS.length) % TIME_PHRASES.length];
+        const placePhrase = PLACE_PHRASES[Math.floor(index / (LISTENING_PATTERNS.length * TIME_PHRASES.length)) % PLACE_PHRASES.length];
+        const difficulty = getGeneratedDifficulty(index);
         const [topic, scene, action, hint, explain] = pattern;
         BANK.listening.push({
           level: 'kids',
+          difficulty,
           topic,
           title: `Daily Listening ${index + 1}`,
           prompt: 'Listen and choose the picture.',
-          audio: `${name} ${action}.`,
+          audio: difficulty === 'hard'
+            ? `${name} ${action} ${timePhrase} ${placePhrase}.`
+            : `${name} ${action} ${timePhrase}.`,
           answer: scene,
           hint,
           explain,
@@ -1890,12 +1951,15 @@
         const pattern = READING_PATTERNS[index % READING_PATTERNS.length];
         const name = STUDENT_NAMES[index % STUDENT_NAMES.length];
         const day = DAYS[index % DAYS.length];
+        const detail = READING_DETAILS[Math.floor(index / READING_PATTERNS.length) % READING_DETAILS.length];
+        const difficulty = getGeneratedDifficulty(index);
         const made = pattern.make(name, day);
         BANK.reading.push({
           level: 'kids',
+          difficulty,
           topic: pattern.topic,
           title: `${pattern.title} ${index + 1}`,
-          passage: made.passage,
+          passage: difficulty === 'easy' ? made.passage : `${made.passage} ${detail}`,
           question: made.question,
           answer: made.answer,
           hint: made.hint,
@@ -1906,22 +1970,53 @@
       }
     }
 
+    function makeGeneratedVocabItem(index) {
+      const difficulty = getGeneratedDifficulty(index);
+      if (difficulty === 'easy' && index < GENERATED_WORDS.length) {
+        const [word, answer, topic, phonics] = GENERATED_WORDS[index];
+        return { word, answer, topic, phonics, difficulty };
+      }
+
+      if (difficulty !== 'hard') {
+        const adjective = VOCAB_ADJECTIVES[index % VOCAB_ADJECTIVES.length];
+        const noun = VOCAB_NOUNS[Math.floor(index / VOCAB_ADJECTIVES.length) % VOCAB_NOUNS.length];
+        return {
+          word: `${adjective[0]} ${noun[0]}`,
+          answer: `${adjective[1]}${noun[1]}`,
+          topic: noun[2],
+          phonics: `${adjective[0]} ${noun[0]}`,
+          difficulty
+        };
+      }
+
+      const action = VOCAB_ACTIONS[index % VOCAB_ACTIONS.length];
+      const noun = VOCAB_NOUNS[Math.floor(index / VOCAB_ACTIONS.length) % VOCAB_NOUNS.length];
+      return {
+        word: `${action[0]} ${noun[0]}`,
+        answer: `${action[1]}${noun[1]}`,
+        topic: noun[2],
+        phonics: `${action[0]} ${noun[0]}`,
+        difficulty
+      };
+    }
+
     function addGeneratedVocabQuestions() {
       let index = 0;
       while (BANK.vocab.length < TARGET_QUESTIONS_PER_MODE) {
-        const [word, answer, topic, phonics] = GENERATED_WORDS[index % GENERATED_WORDS.length];
-        const first = GENERATED_WORDS[(index + 11) % GENERATED_WORDS.length][1];
-        const second = GENERATED_WORDS[(index + 29) % GENERATED_WORDS.length][1];
+        const item = makeGeneratedVocabItem(index);
+        const first = makeGeneratedVocabItem(index + 137).answer;
+        const second = makeGeneratedVocabItem(index + 293).answer;
         BANK.vocab.push({
           level: 'kids',
-          topic,
+          difficulty: item.difficulty,
+          topic: item.topic,
           title: `Word Practice ${index + 1}`,
-          word,
-          phonics,
-          answer,
-          hint: `想想 ${word} 在生活或學校情境中的意思。`,
-          explain: `${word} 的意思是「${answer}」。`,
-          choices: [answer, first, second]
+          word: item.word,
+          phonics: item.phonics,
+          answer: item.answer,
+          hint: `想想 ${item.word} 在生活或學校情境中的意思。`,
+          explain: `${item.word} 的意思是「${item.answer}」。`,
+          choices: [item.answer, first, second]
         });
         index += 1;
       }
@@ -1944,6 +2039,7 @@
       mode: 'listening',
       level: 'kids',
       topic: 'all',
+      difficulty: 'all',
       current: null,
       selected: null,
       answered: false,
@@ -1959,6 +2055,7 @@
       modeList: document.getElementById('modeList'),
       levelSelect: document.getElementById('levelSelect'),
       topicSelect: document.getElementById('topicSelect'),
+      difficultySelect: document.getElementById('difficultySelect'),
       promptArea: document.getElementById('promptArea'),
       feedback: document.getElementById('feedback'),
       checkBtn: document.getElementById('checkBtn'),
@@ -2013,7 +2110,9 @@
       return BANK[mode].filter((item) => {
         const levelOk = item.level === state.level || (state.level === 'bridge' && item.level === 'kids');
         const topicOk = state.topic === 'all' || item.topic === state.topic;
-        return levelOk && topicOk;
+        const itemDifficulty = item.difficulty || 'easy';
+        const difficultyOk = state.difficulty === 'all' || itemDifficulty === state.difficulty;
+        return levelOk && topicOk && difficultyOk;
       });
     }
 
@@ -2027,7 +2126,7 @@
     }
 
     function getBankKey() {
-      return `${state.mode}:${state.level}:${state.topic}:${getActiveBank().map(getQuestionId).join('|')}`;
+      return `${state.mode}:${state.level}:${state.topic}:${state.difficulty}:${getActiveBank().map(getQuestionId).join('|')}`;
     }
 
     function resetQuestionQueue() {
@@ -2380,6 +2479,14 @@
 
       els.topicSelect.addEventListener('change', () => {
         state.topic = els.topicSelect.value;
+        state.sessionTotal = 0;
+        state.sessionCorrect = 0;
+        resetQuestionQueue();
+        pickQuestion();
+      });
+
+      els.difficultySelect.addEventListener('change', () => {
+        state.difficulty = els.difficultySelect.value;
         state.sessionTotal = 0;
         state.sessionCorrect = 0;
         resetQuestionQueue();
