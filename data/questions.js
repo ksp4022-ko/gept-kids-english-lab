@@ -963,6 +963,172 @@
       ['run in', '在...跑步'], ['play with', '和...玩'], ['look at', '看著'], ['put away', '收好'], ['take', '拿']
     ];
 
+    const VALID_VOCAB_ITEMS = [
+      { word: 'apple', answer: '蘋果', topic: 'food', phonics: 'ap-ple', difficulty: 'easy', pos: 'noun' },
+      { word: 'banana', answer: '香蕉', topic: 'food', phonics: 'ba-na-na', difficulty: 'easy', pos: 'noun' },
+      { word: 'orange', answer: '柳橙', topic: 'food', phonics: 'or-ange', difficulty: 'easy', pos: 'noun' },
+      { word: 'bread', answer: '麵包', topic: 'food', phonics: 'bread', difficulty: 'easy', pos: 'noun' },
+      { word: 'water', answer: '水', topic: 'food', phonics: 'wa-ter', difficulty: 'easy', pos: 'noun' },
+      { word: 'juice', answer: '果汁', topic: 'food', phonics: 'juice', difficulty: 'easy', pos: 'noun' },
+      { word: 'sandwich', answer: '三明治', topic: 'food', phonics: 'sand-wich', difficulty: 'easy', pos: 'noun' },
+      { word: 'tomato', answer: '番茄', topic: 'food', phonics: 'to-ma-to', difficulty: 'easy', pos: 'noun' },
+      { word: 'egg', answer: '蛋', topic: 'food', phonics: 'egg', difficulty: 'easy', pos: 'noun' },
+      { word: 'breakfast', answer: '早餐', topic: 'food', phonics: 'break-fast', difficulty: 'easy', pos: 'noun' },
+      { word: 'lunch', answer: '午餐', topic: 'food', phonics: 'lunch', difficulty: 'easy', pos: 'noun' },
+      { word: 'dinner', answer: '晚餐', topic: 'food', phonics: 'din-ner', difficulty: 'easy', pos: 'noun' },
+      { word: 'hungry', answer: '餓的', topic: 'food', phonics: 'hun-gry', difficulty: 'easy', pos: 'adjective' },
+      { word: 'thirsty', answer: '口渴的', topic: 'food', phonics: 'thirs-ty', difficulty: 'easy', pos: 'adjective' },
+      { word: 'teacher', answer: '老師', topic: 'school', phonics: 'teach-er', difficulty: 'easy', pos: 'noun' },
+      { word: 'student', answer: '學生', topic: 'school', phonics: 'stu-dent', difficulty: 'easy', pos: 'noun' },
+      { word: 'classmate', answer: '同學', topic: 'school', phonics: 'class-mate', difficulty: 'easy', pos: 'noun' },
+      { word: 'book', answer: '書', topic: 'school', phonics: 'book', difficulty: 'easy', pos: 'noun' },
+      { word: 'notebook', answer: '筆記本', topic: 'school', phonics: 'note-book', difficulty: 'easy', pos: 'noun' },
+      { word: 'pencil', answer: '鉛筆', topic: 'school', phonics: 'pen-cil', difficulty: 'easy', pos: 'noun' },
+      { word: 'eraser', answer: '橡皮擦', topic: 'school', phonics: 'e-ras-er', difficulty: 'easy', pos: 'noun' },
+      { word: 'ruler', answer: '尺', topic: 'school', phonics: 'ru-ler', difficulty: 'easy', pos: 'noun' },
+      { word: 'desk', answer: '書桌', topic: 'school', phonics: 'desk', difficulty: 'easy', pos: 'noun' },
+      { word: 'chair', answer: '椅子', topic: 'school', phonics: 'chair', difficulty: 'easy', pos: 'noun' },
+      { word: 'board', answer: '黑板', topic: 'school', phonics: 'board', difficulty: 'easy', pos: 'noun' },
+      { word: 'homework', answer: '作業', topic: 'school', phonics: 'home-work', difficulty: 'easy', pos: 'noun' },
+      { word: 'question', answer: '問題', topic: 'school', phonics: 'ques-tion', difficulty: 'easy', pos: 'noun' },
+      { word: 'answer', answer: '答案', topic: 'school', phonics: 'an-swer', difficulty: 'easy', pos: 'noun' },
+      { word: 'family', answer: '家人', topic: 'home', phonics: 'fam-i-ly', difficulty: 'easy', pos: 'noun' },
+      { word: 'mother', answer: '母親', topic: 'home', phonics: 'moth-er', difficulty: 'easy', pos: 'noun' },
+      { word: 'father', answer: '父親', topic: 'home', phonics: 'fa-ther', difficulty: 'easy', pos: 'noun' },
+      { word: 'sister', answer: '姊妹', topic: 'home', phonics: 'sis-ter', difficulty: 'easy', pos: 'noun' },
+      { word: 'brother', answer: '兄弟', topic: 'home', phonics: 'broth-er', difficulty: 'easy', pos: 'noun' },
+      { word: 'kitchen', answer: '廚房', topic: 'home', phonics: 'kitch-en', difficulty: 'easy', pos: 'noun' },
+      { word: 'bedroom', answer: '臥室', topic: 'home', phonics: 'bed-room', difficulty: 'easy', pos: 'noun' },
+      { word: 'table', answer: '桌子', topic: 'home', phonics: 'ta-ble', difficulty: 'easy', pos: 'noun' },
+      { word: 'window', answer: '窗戶', topic: 'home', phonics: 'win-dow', difficulty: 'easy', pos: 'noun' },
+      { word: 'door', answer: '門', topic: 'home', phonics: 'door', difficulty: 'easy', pos: 'noun' },
+      { word: 'garden', answer: '花園', topic: 'home', phonics: 'gar-den', difficulty: 'easy', pos: 'noun' },
+      { word: 'morning', answer: '早上', topic: 'home', phonics: 'morn-ing', difficulty: 'easy', pos: 'noun' },
+      { word: 'evening', answer: '晚上', topic: 'home', phonics: 'eve-ning', difficulty: 'easy', pos: 'noun' },
+      { word: 'sunny', answer: '晴朗的', topic: 'weather', phonics: 'sun-ny', difficulty: 'easy', pos: 'adjective' },
+      { word: 'rainy', answer: '下雨的', topic: 'weather', phonics: 'rain-y', difficulty: 'easy', pos: 'adjective' },
+      { word: 'windy', answer: '有風的', topic: 'weather', phonics: 'wind-y', difficulty: 'easy', pos: 'adjective' },
+      { word: 'cloudy', answer: '多雲的', topic: 'weather', phonics: 'cloud-y', difficulty: 'easy', pos: 'adjective' },
+      { word: 'hot', answer: '熱的', topic: 'weather', phonics: 'hot', difficulty: 'easy', pos: 'adjective' },
+      { word: 'cold', answer: '冷的', topic: 'weather', phonics: 'cold', difficulty: 'easy', pos: 'adjective' },
+      { word: 'warm', answer: '溫暖的', topic: 'weather', phonics: 'warm', difficulty: 'easy', pos: 'adjective' },
+      { word: 'cool', answer: '涼爽的', topic: 'weather', phonics: 'cool', difficulty: 'easy', pos: 'adjective' },
+      { word: 'umbrella', answer: '雨傘', topic: 'weather', phonics: 'um-brel-la', difficulty: 'easy', pos: 'noun' },
+      { word: 'jacket', answer: '夾克', topic: 'weather', phonics: 'jack-et', difficulty: 'easy', pos: 'noun' },
+      { word: 'hat', answer: '帽子', topic: 'weather', phonics: 'hat', difficulty: 'easy', pos: 'noun' },
+      { word: 'boots', answer: '靴子', topic: 'weather', phonics: 'boots', difficulty: 'easy', pos: 'noun' },
+      { word: 'doctor', answer: '醫生', topic: 'health', phonics: 'doc-tor', difficulty: 'easy', pos: 'noun' },
+      { word: 'nurse', answer: '護理師', topic: 'health', phonics: 'nurse', difficulty: 'easy', pos: 'noun' },
+      { word: 'fever', answer: '發燒', topic: 'health', phonics: 'fe-ver', difficulty: 'easy', pos: 'noun' },
+      { word: 'cough', answer: '咳嗽', topic: 'health', phonics: 'cough', difficulty: 'easy', pos: 'noun' },
+      { word: 'headache', answer: '頭痛', topic: 'health', phonics: 'head-ache', difficulty: 'easy', pos: 'noun' },
+      { word: 'toothache', answer: '牙痛', topic: 'health', phonics: 'tooth-ache', difficulty: 'easy', pos: 'noun' },
+      { word: 'medicine', answer: '藥', topic: 'health', phonics: 'med-i-cine', difficulty: 'easy', pos: 'noun' },
+      { word: 'tired', answer: '累的', topic: 'health', phonics: 'tired', difficulty: 'easy', pos: 'adjective' },
+      { word: 'healthy', answer: '健康的', topic: 'health', phonics: 'health-y', difficulty: 'easy', pos: 'adjective' },
+      { word: 'happy', answer: '開心的', topic: 'health', phonics: 'hap-py', difficulty: 'easy', pos: 'adjective' },
+      { word: 'sad', answer: '難過的', topic: 'health', phonics: 'sad', difficulty: 'easy', pos: 'adjective' },
+      { word: 'park', answer: '公園', topic: 'places', phonics: 'park', difficulty: 'easy', pos: 'noun' },
+      { word: 'library', answer: '圖書館', topic: 'places', phonics: 'li-brar-y', difficulty: 'easy', pos: 'noun' },
+      { word: 'market', answer: '市場', topic: 'places', phonics: 'mar-ket', difficulty: 'easy', pos: 'noun' },
+      { word: 'zoo', answer: '動物園', topic: 'places', phonics: 'zoo', difficulty: 'easy', pos: 'noun' },
+      { word: 'shop', answer: '商店', topic: 'places', phonics: 'shop', difficulty: 'easy', pos: 'noun' },
+      { word: 'hospital', answer: '醫院', topic: 'places', phonics: 'hos-pi-tal', difficulty: 'easy', pos: 'noun' },
+      { word: 'museum', answer: '博物館', topic: 'places', phonics: 'mu-se-um', difficulty: 'easy', pos: 'noun' },
+      { word: 'restaurant', answer: '餐廳', topic: 'places', phonics: 'res-tau-rant', difficulty: 'easy', pos: 'noun' },
+      { word: 'station', answer: '車站', topic: 'places', phonics: 'sta-tion', difficulty: 'easy', pos: 'noun' },
+      { word: 'street', answer: '街道', topic: 'places', phonics: 'street', difficulty: 'easy', pos: 'noun' },
+
+      { word: 'red apple', answer: '紅色的蘋果', topic: 'food', phonics: 'red ap-ple', difficulty: 'medium', pos: 'phrase' },
+      { word: 'green apple', answer: '綠色的蘋果', topic: 'food', phonics: 'green ap-ple', difficulty: 'medium', pos: 'phrase' },
+      { word: 'yellow banana', answer: '黃色的香蕉', topic: 'food', phonics: 'yel-low ba-na-na', difficulty: 'medium', pos: 'phrase' },
+      { word: 'hot soup', answer: '熱湯', topic: 'food', phonics: 'hot soup', difficulty: 'medium', pos: 'phrase' },
+      { word: 'cold water', answer: '冰水', topic: 'food', phonics: 'cold wa-ter', difficulty: 'medium', pos: 'phrase' },
+      { word: 'warm milk', answer: '溫牛奶', topic: 'food', phonics: 'warm milk', difficulty: 'medium', pos: 'phrase' },
+      { word: 'small cake', answer: '小蛋糕', topic: 'food', phonics: 'small cake', difficulty: 'medium', pos: 'phrase' },
+      { word: 'big sandwich', answer: '大的三明治', topic: 'food', phonics: 'big sand-wich', difficulty: 'medium', pos: 'phrase' },
+      { word: 'new notebook', answer: '新的筆記本', topic: 'school', phonics: 'new note-book', difficulty: 'medium', pos: 'phrase' },
+      { word: 'blue bag', answer: '藍色的書包', topic: 'school', phonics: 'blue bag', difficulty: 'medium', pos: 'phrase' },
+      { word: 'green book', answer: '綠色的書', topic: 'school', phonics: 'green book', difficulty: 'medium', pos: 'phrase' },
+      { word: 'yellow pencil', answer: '黃色的鉛筆', topic: 'school', phonics: 'yel-low pen-cil', difficulty: 'medium', pos: 'phrase' },
+      { word: 'long ruler', answer: '長尺', topic: 'school', phonics: 'long ru-ler', difficulty: 'medium', pos: 'phrase' },
+      { word: 'short pencil', answer: '短鉛筆', topic: 'school', phonics: 'short pen-cil', difficulty: 'medium', pos: 'phrase' },
+      { word: 'quiet classmate', answer: '安靜的同學', topic: 'school', phonics: 'qui-et class-mate', difficulty: 'medium', pos: 'phrase' },
+      { word: 'clean desk', answer: '乾淨的書桌', topic: 'school', phonics: 'clean desk', difficulty: 'medium', pos: 'phrase' },
+      { word: 'clean room', answer: '乾淨的房間', topic: 'home', phonics: 'clean room', difficulty: 'medium', pos: 'phrase' },
+      { word: 'dirty cup', answer: '髒杯子', topic: 'home', phonics: 'dir-ty cup', difficulty: 'medium', pos: 'phrase' },
+      { word: 'small kitchen', answer: '小廚房', topic: 'home', phonics: 'small kitch-en', difficulty: 'medium', pos: 'phrase' },
+      { word: 'big garden', answer: '大花園', topic: 'home', phonics: 'big gar-den', difficulty: 'medium', pos: 'phrase' },
+      { word: 'open door', answer: '開著的門', topic: 'home', phonics: 'o-pen door', difficulty: 'medium', pos: 'phrase' },
+      { word: 'closed window', answer: '關著的窗戶', topic: 'home', phonics: 'closed win-dow', difficulty: 'medium', pos: 'phrase' },
+      { word: 'rainy day', answer: '下雨天', topic: 'weather', phonics: 'rain-y day', difficulty: 'medium', pos: 'phrase' },
+      { word: 'sunny day', answer: '晴天', topic: 'weather', phonics: 'sun-ny day', difficulty: 'medium', pos: 'phrase' },
+      { word: 'cloudy morning', answer: '多雲的早上', topic: 'weather', phonics: 'cloud-y morn-ing', difficulty: 'medium', pos: 'phrase' },
+      { word: 'windy afternoon', answer: '有風的下午', topic: 'weather', phonics: 'wind-y af-ter-noon', difficulty: 'medium', pos: 'phrase' },
+      { word: 'warm jacket', answer: '保暖的夾克', topic: 'weather', phonics: 'warm jack-et', difficulty: 'medium', pos: 'phrase' },
+      { word: 'cool evening', answer: '涼爽的晚上', topic: 'weather', phonics: 'cool eve-ning', difficulty: 'medium', pos: 'phrase' },
+      { word: 'sick student', answer: '生病的學生', topic: 'health', phonics: 'sick stu-dent', difficulty: 'medium', pos: 'phrase' },
+      { word: 'warm water', answer: '溫水', topic: 'health', phonics: 'warm wa-ter', difficulty: 'medium', pos: 'phrase' },
+      { word: 'clean hands', answer: '乾淨的手', topic: 'health', phonics: 'clean hands', difficulty: 'medium', pos: 'phrase' },
+      { word: 'healthy food', answer: '健康的食物', topic: 'health', phonics: 'health-y food', difficulty: 'medium', pos: 'phrase' },
+      { word: 'tired doctor', answer: '疲累的醫生', topic: 'health', phonics: 'tired doc-tor', difficulty: 'medium', pos: 'phrase' },
+      { word: 'happy nurse', answer: '開心的護理師', topic: 'health', phonics: 'hap-py nurse', difficulty: 'medium', pos: 'phrase' },
+      { word: 'busy street', answer: '繁忙的街道', topic: 'places', phonics: 'bus-y street', difficulty: 'medium', pos: 'phrase' },
+      { word: 'quiet library', answer: '安靜的圖書館', topic: 'places', phonics: 'qui-et li-brar-y', difficulty: 'medium', pos: 'phrase' },
+      { word: 'big hospital', answer: '大醫院', topic: 'places', phonics: 'big hos-pi-tal', difficulty: 'medium', pos: 'phrase' },
+      { word: 'small shop', answer: '小商店', topic: 'places', phonics: 'small shop', difficulty: 'medium', pos: 'phrase' },
+      { word: 'new restaurant', answer: '新的餐廳', topic: 'places', phonics: 'new res-tau-rant', difficulty: 'medium', pos: 'phrase' },
+      { word: 'old museum', answer: '舊博物館', topic: 'places', phonics: 'old mu-se-um', difficulty: 'medium', pos: 'phrase' },
+
+      { word: 'read a book', answer: '讀一本書', topic: 'school', phonics: 'read a book', difficulty: 'hard', pos: 'phrase' },
+      { word: 'write a sentence', answer: '寫一個句子', topic: 'school', phonics: 'write a sen-tence', difficulty: 'hard', pos: 'phrase' },
+      { word: 'draw a picture', answer: '畫一張圖', topic: 'school', phonics: 'draw a pic-ture', difficulty: 'hard', pos: 'phrase' },
+      { word: 'listen to music', answer: '聽音樂', topic: 'school', phonics: 'lis-ten to mu-sic', difficulty: 'hard', pos: 'phrase' },
+      { word: 'speak English', answer: '說英文', topic: 'school', phonics: 'speak Eng-lish', difficulty: 'hard', pos: 'phrase' },
+      { word: 'bring a notebook', answer: '帶一本筆記本', topic: 'school', phonics: 'bring a note-book', difficulty: 'hard', pos: 'phrase' },
+      { word: 'borrow a book', answer: '借一本書', topic: 'school', phonics: 'bor-row a book', difficulty: 'hard', pos: 'phrase' },
+      { word: 'answer a question', answer: '回答一個問題', topic: 'school', phonics: 'an-swer a ques-tion', difficulty: 'hard', pos: 'phrase' },
+      { word: 'ask a question', answer: '問一個問題', topic: 'school', phonics: 'ask a ques-tion', difficulty: 'hard', pos: 'phrase' },
+      { word: 'open your book', answer: '打開你的書', topic: 'school', phonics: 'o-pen your book', difficulty: 'hard', pos: 'phrase' },
+      { word: 'cook dinner', answer: '煮晚餐', topic: 'food', phonics: 'cook din-ner', difficulty: 'hard', pos: 'phrase' },
+      { word: 'eat breakfast', answer: '吃早餐', topic: 'food', phonics: 'eat break-fast', difficulty: 'hard', pos: 'phrase' },
+      { word: 'drink water', answer: '喝水', topic: 'food', phonics: 'drink wa-ter', difficulty: 'hard', pos: 'phrase' },
+      { word: 'buy a cake', answer: '買一個蛋糕', topic: 'food', phonics: 'buy a cake', difficulty: 'hard', pos: 'phrase' },
+      { word: 'make a sandwich', answer: '做一個三明治', topic: 'food', phonics: 'make a sand-wich', difficulty: 'hard', pos: 'phrase' },
+      { word: 'wash an apple', answer: '洗一顆蘋果', topic: 'food', phonics: 'wash an ap-ple', difficulty: 'hard', pos: 'phrase' },
+      { word: 'clean the room', answer: '打掃房間', topic: 'home', phonics: 'clean the room', difficulty: 'hard', pos: 'phrase' },
+      { word: 'wash your hands', answer: '洗手', topic: 'home', phonics: 'wash your hands', difficulty: 'hard', pos: 'phrase' },
+      { word: 'close the window', answer: '關窗戶', topic: 'home', phonics: 'close the win-dow', difficulty: 'hard', pos: 'phrase' },
+      { word: 'open the door', answer: '開門', topic: 'home', phonics: 'o-pen the door', difficulty: 'hard', pos: 'phrase' },
+      { word: 'help your mother', answer: '幫助你的媽媽', topic: 'home', phonics: 'help your moth-er', difficulty: 'hard', pos: 'phrase' },
+      { word: 'watch TV', answer: '看電視', topic: 'home', phonics: 'watch T V', difficulty: 'hard', pos: 'phrase' },
+      { word: 'put away your bag', answer: '收好你的書包', topic: 'home', phonics: 'put a-way your bag', difficulty: 'hard', pos: 'phrase' },
+      { word: 'take an umbrella', answer: '帶一把雨傘', topic: 'weather', phonics: 'take an um-brel-la', difficulty: 'hard', pos: 'phrase' },
+      { word: 'wear a jacket', answer: '穿夾克', topic: 'weather', phonics: 'wear a jack-et', difficulty: 'hard', pos: 'phrase' },
+      { word: 'put on boots', answer: '穿上靴子', topic: 'weather', phonics: 'put on boots', difficulty: 'hard', pos: 'phrase' },
+      { word: 'look at the sky', answer: '看天空', topic: 'weather', phonics: 'look at the sky', difficulty: 'hard', pos: 'phrase' },
+      { word: 'stay inside', answer: '待在室內', topic: 'weather', phonics: 'stay in-side', difficulty: 'hard', pos: 'phrase' },
+      { word: 'see a doctor', answer: '看醫生', topic: 'health', phonics: 'see a doc-tor', difficulty: 'hard', pos: 'phrase' },
+      { word: 'take medicine', answer: '吃藥', topic: 'health', phonics: 'take med-i-cine', difficulty: 'hard', pos: 'phrase' },
+      { word: 'drink warm water', answer: '喝溫水', topic: 'health', phonics: 'drink warm wa-ter', difficulty: 'hard', pos: 'phrase' },
+      { word: 'get some rest', answer: '休息一下', topic: 'health', phonics: 'get some rest', difficulty: 'hard', pos: 'phrase' },
+      { word: 'brush your teeth', answer: '刷牙', topic: 'health', phonics: 'brush your teeth', difficulty: 'hard', pos: 'phrase' },
+      { word: 'wash your face', answer: '洗臉', topic: 'health', phonics: 'wash your face', difficulty: 'hard', pos: 'phrase' },
+      { word: 'go to the park', answer: '去公園', topic: 'places', phonics: 'go to the park', difficulty: 'hard', pos: 'phrase' },
+      { word: 'visit the zoo', answer: '參觀動物園', topic: 'places', phonics: 'vis-it the zoo', difficulty: 'hard', pos: 'phrase' },
+      { word: 'walk to school', answer: '走路去學校', topic: 'places', phonics: 'walk to school', difficulty: 'hard', pos: 'phrase' },
+      { word: 'run in the park', answer: '在公園跑步', topic: 'places', phonics: 'run in the park', difficulty: 'hard', pos: 'phrase' },
+      { word: 'buy a ticket', answer: '買票', topic: 'places', phonics: 'buy a tick-et', difficulty: 'hard', pos: 'phrase' },
+      { word: 'wait at the station', answer: '在車站等', topic: 'places', phonics: 'wait at the sta-tion', difficulty: 'hard', pos: 'phrase' },
+      { word: 'eat at a restaurant', answer: '在餐廳吃飯', topic: 'places', phonics: 'eat at a res-tau-rant', difficulty: 'hard', pos: 'phrase' }
+    ];
+
+    const VOCAB_ITEMS_BY_DIFFICULTY = {
+      easy: VALID_VOCAB_ITEMS.filter((item) => item.difficulty === 'easy'),
+      medium: VALID_VOCAB_ITEMS.filter((item) => item.difficulty === 'medium'),
+      hard: VALID_VOCAB_ITEMS.filter((item) => item.difficulty === 'hard')
+    };
+
     function makePictureChoices(answerScene, index, topic = 'all') {
       const answerConfig = SCENE_MAP[answerScene];
       const scenePool = LISTENING_SCENES.length
@@ -1111,9 +1277,66 @@
       }
     }
 
+    function pickCuratedVocabItem(index) {
+      const difficulty = getGeneratedDifficulty(index);
+      const source = VOCAB_ITEMS_BY_DIFFICULTY[difficulty] || VALID_VOCAB_ITEMS;
+      const round = Math.floor(index / source.length);
+      const offset = (round * 7) % source.length;
+      return source[(index + offset) % source.length];
+    }
+
+    function makeCuratedVocabChoices(item, index) {
+      const preferred = VALID_VOCAB_ITEMS.filter((candidate) => (
+        candidate.answer !== item.answer &&
+        candidate.word !== item.word &&
+        candidate.pos === item.pos &&
+        candidate.difficulty === item.difficulty
+      ));
+      const fallback = VALID_VOCAB_ITEMS.filter((candidate) => (
+        candidate.answer !== item.answer &&
+        candidate.word !== item.word
+      ));
+      const pool = preferred.length >= 2 ? preferred : fallback;
+      const choices = [item.answer];
+      let cursor = index;
+      while (choices.length < 3 && pool.length) {
+        const candidate = pool[cursor % pool.length].answer;
+        if (!choices.includes(candidate)) choices.push(candidate);
+        cursor += 11;
+      }
+      return choices;
+    }
+
+    function addCuratedVocabQuestions() {
+      let index = 0;
+      while (BANK.vocab.length < TARGET_QUESTIONS_PER_MODE) {
+        const item = pickCuratedVocabItem(index);
+        BANK.vocab.push({
+          level: 'kids',
+          difficulty: item.difficulty,
+          topic: item.topic,
+          title: `Word Practice ${index + 1}`,
+          word: item.word,
+          phonics: item.phonics,
+          answer: item.answer,
+          hint: `${item.word} 是已審核的常用單字或自然片語。`,
+          explain: `${item.word} 的意思是「${item.answer}」。`,
+          choices: makeCuratedVocabChoices(item, index)
+        });
+        index += 1;
+      }
+    }
+
+    function normalizeManualVocabQuestions() {
+      BANK.vocab.forEach((item) => {
+        if (!item.difficulty) item.difficulty = item.level === 'bridge' ? 'medium' : 'easy';
+      });
+    }
+
     addGeneratedListeningQuestions();
     addGeneratedReadingQuestions();
-    addGeneratedVocabQuestions();
+    normalizeManualVocabQuestions();
+    addCuratedVocabQuestions();
 
     window.GEPT_QUESTIONS = {
       BANK,
