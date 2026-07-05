@@ -1,6 +1,13 @@
 # GEPT Kids English Lab
 
-給小學生使用的英文聽力、閱讀、單字練習工具。可直接開啟 `index.html`，也可用 GitHub Pages 發布。
+GEPT Kids English Lab 是給國小中高年級學生使用的英文聽力、閱讀與單字練習網站。內容以小學生熟悉的生活情境為主，程度從 A1 暖身銜接到 GEPT 初級 A2。
+
+目前專案是純前端靜態頁面，不需要後端、資料庫或登入系統，可直接用 GitHub Pages 發布。
+
+- 公開網站：<https://ksp4022-ko.github.io/gept-kids-english-lab/>
+- GitHub repository：<https://github.com/ksp4022-ko/gept-kids-english-lab>
+- 完整規格：[PROJECT.md](PROJECT.md)
+- 後續工作：[NEXT_STEPS.md](NEXT_STEPS.md)
 
 ## 題庫規模
 
@@ -10,7 +17,9 @@
 - Reading：800 題
 - Words：800 題
 
-題目不是全部手寫在 HTML 裡，而是用模板和字彙表在瀏覽器端產生。這樣比較容易擴充，也避免同一輪一直抽到完全相同的題目。
+題目不是全部手寫在 HTML 裡，而是由 `data/questions.js` 裡的模板和字彙表在瀏覽器端產生。這樣比較容易擴充，也避免同一輪一直抽到完全相同的題目。
+
+Listening 圖片採組合式 scene 系統，第一階段已有 100 個可生成場景；手寫題與生成題合計可用答案場景超過 100 種。
 
 ## 難度設計
 
@@ -35,8 +44,6 @@
 3. 每輪最多 10 題，同一輪會先洗牌，題目用完前不重複。
 4. 聽力題使用瀏覽器內建 Web Speech API。
 
-## 發布網址
+## 下一個主要改進
 
-GitHub Pages:
-
-`https://ksp4022-ko.github.io/gept-kids-english-lab/`
+把 Listening 組合式圖片場景擴到至少 300 個，再增加更多題型模板，例如對話題、表格題、告示題、訊息題、推論題、否定句、比較句與順序題。

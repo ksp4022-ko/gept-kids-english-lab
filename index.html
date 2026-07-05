@@ -53,6 +53,10 @@
       cursor: pointer;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     button:focus-visible,
     select:focus-visible,
     input:focus-visible {
@@ -820,9 +824,15 @@
     }
 
     @media (max-width: 700px) {
+      body {
+        padding-bottom: 66px;
+      }
+
       .topbar {
         align-items: flex-start;
         flex-direction: column;
+        gap: 8px;
+        padding: 10px 12px;
       }
 
       .top-actions {
@@ -836,10 +846,145 @@
 
       .brand p {
         white-space: normal;
+        font-size: .78rem;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+      }
+
+      .layout {
+        padding-top: 10px;
+        padding-bottom: 18px;
+      }
+
+      .main {
+        order: -1;
+        gap: 10px;
+      }
+
+      .toolbar {
+        padding: 8px;
+        gap: 8px;
+      }
+
+      .toolbar-group {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      label.select-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      select {
+        width: 100%;
+        min-height: 38px;
+        padding: 0 24px 0 8px;
+        font-size: .82rem;
+      }
+
+      .progress-wrap {
+        min-width: 100%;
+      }
+
+      .progress {
+        height: 8px;
       }
 
       .sidebar {
         grid-template-columns: 1fr;
+      }
+
+      .hero-band,
+      .focus-list {
+        display: none;
+      }
+
+      .panel {
+        padding: 10px;
+      }
+
+      .mode-btn {
+        grid-template-columns: 34px 1fr auto;
+        padding: 9px;
+      }
+
+      .mode-icon {
+        width: 34px;
+        height: 34px;
+      }
+
+      .practice-stage {
+        min-height: auto;
+        scroll-margin-top: 8px;
+      }
+
+      .stage-head {
+        padding: 12px;
+      }
+
+      .stage-title h2 {
+        font-size: 1.2rem;
+      }
+
+      .stage-body {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .prompt-area {
+        gap: 10px;
+      }
+
+      .question-block {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        margin: -4px -4px 0;
+        padding: 8px;
+        border: 1px solid rgba(33, 49, 60, .08);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .96);
+        box-shadow: 0 8px 20px rgba(36, 59, 69, .08);
+      }
+
+      .prompt-text {
+        font-size: 1rem;
+        line-height: 1.35;
+      }
+
+      .audio-line {
+        padding: 8px;
+        gap: 8px;
+      }
+
+      .listen-btn {
+        width: 44px;
+        height: 44px;
+      }
+
+      .support-text {
+        flex: 1 1 140px;
+        font-size: .86rem;
+      }
+
+      .reading-passage {
+        padding: 12px;
+        font-size: .96rem;
+        line-height: 1.55;
       }
 
       .visual-grid,
@@ -847,19 +992,41 @@
         grid-template-columns: 1fr;
       }
 
-      .stage-head,
       .stage-actions {
-        align-items: stretch;
-        flex-direction: column;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 30;
+        display: grid;
+        grid-template-columns: minmax(82px, .8fr) minmax(0, 1.7fr);
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-top: 1px solid rgba(33, 49, 60, .12);
+        box-shadow: 0 -12px 30px rgba(36, 59, 69, .14);
       }
 
-      .answer-actions,
       .stage-actions .pill-btn {
+        min-height: 42px;
+      }
+
+      .answer-actions {
+        width: 100%;
+        min-width: 0;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .answer-actions .pill-btn,
+      .stage-actions > .pill-btn {
         width: 100%;
       }
 
-      .answer-actions .pill-btn {
-        flex: 1;
+      .feedback {
+        min-height: 54px;
+        padding: 10px;
+        font-size: .9rem;
       }
     }
 
@@ -868,18 +1035,33 @@
         padding-inline: 10px;
       }
 
-      .visual-grid,
+      .toolbar-group {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      select {
+        padding: 0 18px 0 6px;
+        font-size: .74rem;
+      }
+
       .stat-grid {
         grid-template-columns: 1fr;
       }
 
       .picture-card {
-        grid-template-rows: 82px auto;
-        min-height: 132px;
+        min-height: 92px;
+        grid-template-columns: 92px 1fr;
+        grid-template-rows: 1fr;
+        text-align: left;
+        padding: 8px;
       }
 
       .mini-illustration {
-        height: 82px;
+        height: 72px;
+      }
+
+      .picture-card span {
+        text-align: left;
       }
 
       .caption-toggle {
@@ -1047,6 +1229,7 @@
     </div>
   </div>
 
+  <script src="data/questions.js"></script>
   <script>
     const MODES = [
       { id: 'listening', label: '聽句選圖', icon: '▶', skill: 'Listening', description: '短句、對話與圖片理解' },
@@ -1054,977 +1237,7 @@
       { id: 'vocab', label: '單字配對', icon: '✓', skill: 'Words', description: '基礎字彙與中文意思' }
     ];
 
-    const BANK = {
-      listening: [
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'Classroom Action',
-          prompt: 'Listen and choose the picture.',
-          audio: 'Please open your book to page ten.',
-          answer: 'book',
-          hint: '老師在說課本和頁碼。',
-          explain: 'open your book 是課堂常見指令。',
-          choices: [
-            { id: 'book', label: 'Open a book', scene: 'book' },
-            { id: 'soccer', label: 'Play soccer', scene: 'soccer' },
-            { id: 'lunch', label: 'Eat lunch', scene: 'lunch' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'food',
-          title: 'Lunch Time',
-          prompt: 'Listen and choose the picture.',
-          audio: 'The boy wants some noodles for lunch.',
-          answer: 'noodles',
-          hint: '注意 wants 和 noodles。',
-          explain: 'for lunch 表示午餐吃什麼。',
-          choices: [
-            { id: 'cake', label: 'A birthday cake', scene: 'cake' },
-            { id: 'noodles', label: 'Noodles', scene: 'noodles' },
-            { id: 'milk', label: 'Milk', scene: 'milk' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'weather',
-          title: 'Weather',
-          prompt: 'Listen and choose the picture.',
-          audio: 'It is rainy. Take your umbrella.',
-          answer: 'umbrella',
-          hint: '聽天氣和要帶的物品。',
-          explain: 'rainy 和 umbrella 常一起出現。',
-          choices: [
-            { id: 'sun', label: 'A sunny day', scene: 'sun' },
-            { id: 'umbrella', label: 'An umbrella', scene: 'umbrella' },
-            { id: 'snow', label: 'Snow', scene: 'snow' }
-          ]
-        },
-        {
-          level: 'bridge',
-          topic: 'health',
-          title: 'At the Nurse Office',
-          prompt: 'Listen and choose the best answer.',
-          audio: 'Mia has a toothache. She cannot eat the apple.',
-          answer: 'toothache',
-          hint: '注意身體不舒服的地方。',
-          explain: 'toothache 是牙痛，所以不能吃蘋果。',
-          choices: [
-            { id: 'toothache', label: 'She has a toothache.', scene: 'toothache' },
-            { id: 'sleepy', label: 'She is sleepy.', scene: 'sleepy' },
-            { id: 'running', label: 'She is running.', scene: 'running' }
-          ]
-        },
-        {
-          level: 'bridge',
-          topic: 'places',
-          title: 'After School',
-          prompt: 'Listen and choose the place.',
-          audio: 'After school, Ken goes to the library to read a storybook.',
-          answer: 'library',
-          hint: '聽 Ken 去哪裡，以及做什麼。',
-          explain: 'library 是圖書館，可以 read a storybook。',
-          choices: [
-            { id: 'market', label: 'Market', scene: 'market' },
-            { id: 'library', label: 'Library', scene: 'library' },
-            { id: 'park', label: 'Park', scene: 'park' }
-          ]
-        },
-        {
-          level: 'bridge',
-          topic: 'home',
-          title: 'Helping at Home',
-          prompt: 'Listen and choose what Dad asks.',
-          audio: 'Dad asks Leo to clean his room before dinner.',
-          answer: 'clean',
-          hint: '注意 Dad asks Leo to...',
-          explain: 'clean his room 是整理房間。',
-          choices: [
-            { id: 'clean', label: 'Clean his room', scene: 'clean' },
-            { id: 'watch', label: 'Watch TV', scene: 'watch' },
-            { id: 'sleep', label: 'Go to bed', scene: 'sleep' }
-          ]
-        }
-      ],
-      reading: [
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'A Classroom Notice',
-          passage: 'Class 302 will visit the school garden on Friday. Please bring a hat and a water bottle. We will meet at the classroom at 9:00.',
-          question: 'What should students bring?',
-          answer: 'hat-water',
-          hint: '找 Please bring 後面的物品。',
-          explain: '通知說 Please bring a hat and a water bottle.',
-          choices: [
-            { id: 'hat-water', text: 'A hat and a water bottle' },
-            { id: 'cake-card', text: 'A cake and a card' },
-            { id: 'bike-ball', text: 'A bike and a ball' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'home',
-          title: "Ben's Saturday",
-          passage: 'Ben gets up at seven on Saturday. He helps his mom make breakfast. In the afternoon, he plays basketball with his cousins.',
-          question: 'Who does Ben play basketball with?',
-          answer: 'cousins',
-          hint: '找 plays basketball with 後面的人。',
-          explain: '文章說 with his cousins。',
-          choices: [
-            { id: 'mom', text: 'His mom' },
-            { id: 'teacher', text: 'His teacher' },
-            { id: 'cousins', text: 'His cousins' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'food',
-          title: 'A Short Message',
-          passage: 'Hi Ruby, I am at the fruit shop. Do you want bananas or oranges? I can buy some for our picnic. From Lily',
-          question: 'Where is Lily?',
-          answer: 'fruit-shop',
-          hint: '第一句說 I am at...',
-          explain: 'I am at the fruit shop 表示 Lily 在水果店。',
-          choices: [
-            { id: 'fruit-shop', text: 'At the fruit shop' },
-            { id: 'bookstore', text: 'At the bookstore' },
-            { id: 'classroom', text: 'In the classroom' }
-          ]
-        },
-        {
-          level: 'bridge',
-          topic: 'weather',
-          title: 'Field Trip Plan',
-          passage: 'The weather report says it will be cloudy in the morning and rainy after lunch. The zoo trip will start at 8:30. Students should wear comfortable shoes and bring a raincoat.',
-          question: 'Why should students bring a raincoat?',
-          answer: 'rainy',
-          hint: '找天氣預報 lunch 後面的狀況。',
-          explain: 'It will be rainy after lunch，所以需要 raincoat。',
-          choices: [
-            { id: 'cold', text: 'It will be very cold.' },
-            { id: 'rainy', text: 'It will rain after lunch.' },
-            { id: 'hot', text: 'It will be sunny and hot.' }
-          ]
-        },
-        {
-          level: 'bridge',
-          topic: 'places',
-          title: 'Library Rules',
-          passage: 'Welcome to Green Library. You can borrow three books for two weeks. Please keep quiet and do not eat in the reading room.',
-          question: 'Which is true?',
-          answer: 'quiet',
-          hint: '注意規則中 Please 開頭的句子。',
-          explain: '圖書館規則要求 keep quiet。',
-          choices: [
-            { id: 'quiet', text: 'Readers should keep quiet.' },
-            { id: 'five', text: 'Readers can borrow five books.' },
-            { id: 'eat', text: 'Readers can eat in the reading room.' }
-          ]
-        },
-        {
-          level: 'bridge',
-          topic: 'health',
-          title: 'A Note to Teacher',
-          passage: "Dear Ms. Wang, Tom has a fever today. He will stay home and drink warm water. He cannot go to the music show this afternoon. From Tom's dad",
-          question: 'Why will Tom stay home?',
-          answer: 'fever',
-          hint: '找 Tom 今天怎麼了。',
-          explain: 'Tom has a fever，所以今天在家休息。',
-          choices: [
-            { id: 'fever', text: 'He has a fever.' },
-            { id: 'music', text: 'He needs music practice.' },
-            { id: 'water', text: 'He lost his water bottle.' }
-          ]
-        }
-      ],
-      vocab: [
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'School Words',
-          word: 'borrow',
-          phonics: 'bor-row',
-          answer: '借用',
-          hint: '在圖書館常會做這件事。',
-          explain: 'borrow a book 表示借一本書。',
-          choices: ['借用', '關燈', '跳舞']
-        },
-        {
-          level: 'kids',
-          topic: 'food',
-          title: 'Food Words',
-          word: 'thirsty',
-          phonics: 'thirs-ty',
-          answer: '口渴的',
-          hint: '想喝水時的感覺。',
-          explain: 'I am thirsty. 表示我口渴了。',
-          choices: ['口渴的', '安靜的', '昂貴的']
-        },
-        {
-          level: 'kids',
-          topic: 'home',
-          title: 'Home Words',
-          word: 'clean',
-          phonics: 'clean',
-          answer: '打掃；乾淨的',
-          hint: '整理房間或讓東西不髒。',
-          explain: 'clean your room 是打掃你的房間。',
-          choices: ['打掃；乾淨的', '畫畫', '生氣的']
-        },
-        {
-          level: 'bridge',
-          topic: 'places',
-          title: 'Place Words',
-          word: 'station',
-          phonics: 'sta-tion',
-          answer: '車站',
-          hint: '搭火車或公車會去的地方。',
-          explain: 'train station 是火車站。',
-          choices: ['車站', '雨衣', '牙痛']
-        },
-        {
-          level: 'bridge',
-          topic: 'weather',
-          title: 'Weather Words',
-          word: 'cloudy',
-          phonics: 'cloud-y',
-          answer: '多雲的',
-          hint: '天空有很多雲。',
-          explain: 'It is cloudy today. 表示今天多雲。',
-          choices: ['多雲的', '健康的', '遲到的']
-        },
-        {
-          level: 'bridge',
-          topic: 'health',
-          title: 'Health Words',
-          word: 'medicine',
-          phonics: 'med-i-cine',
-          answer: '藥',
-          hint: '生病時可能會吃。',
-          explain: 'Take some medicine. 表示吃藥。',
-          choices: ['藥', '明信片', '操場']
-        }
-      ]
-    };
-
-    const EXTRA_BANK = {
-      listening: [
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'Pencil Case',
-          prompt: 'Listen and choose the picture.',
-          audio: 'Put your pencil in the pencil case.',
-          answer: 'book',
-          hint: '聽 pencil 和 pencil case。',
-          explain: 'pencil case 是鉛筆盒。',
-          choices: [
-            { id: 'book', label: 'School things', scene: 'book' },
-            { id: 'park', label: 'A park', scene: 'park' },
-            { id: 'cake', label: 'A cake', scene: 'cake' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'After Class',
-          prompt: 'Listen and choose the activity.',
-          audio: 'Amy plays soccer with her friends after class.',
-          answer: 'soccer',
-          hint: '聽 plays soccer。',
-          explain: 'after class 是下課後。',
-          choices: [
-            { id: 'soccer', label: 'Play soccer', scene: 'soccer' },
-            { id: 'sleep', label: 'Go to bed', scene: 'sleep' },
-            { id: 'market', label: 'Go shopping', scene: 'market' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'home',
-          title: 'Evening Routine',
-          prompt: 'Listen and choose what the girl does.',
-          audio: 'The girl watches TV with her brother at night.',
-          answer: 'watch',
-          hint: '聽 watches TV。',
-          explain: 'watch TV 是看電視。',
-          choices: [
-            { id: 'watch', label: 'Watch TV', scene: 'watch' },
-            { id: 'clean', label: 'Clean the room', scene: 'clean' },
-            { id: 'library', label: 'Read in a library', scene: 'library' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'home',
-          title: 'Bed Time',
-          prompt: 'Listen and choose the picture.',
-          audio: 'It is nine o clock. Please go to bed.',
-          answer: 'sleep',
-          hint: '聽 go to bed。',
-          explain: 'go to bed 是上床睡覺。',
-          choices: [
-            { id: 'sleep', label: 'Go to bed', scene: 'sleep' },
-            { id: 'running', label: 'Run outside', scene: 'running' },
-            { id: 'noodles', label: 'Eat noodles', scene: 'noodles' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'food',
-          title: 'Breakfast Drink',
-          prompt: 'Listen and choose the picture.',
-          audio: 'I drink milk for breakfast every day.',
-          answer: 'milk',
-          hint: '聽 drink milk。',
-          explain: 'for breakfast 是早餐。',
-          choices: [
-            { id: 'milk', label: 'Milk', scene: 'milk' },
-            { id: 'umbrella', label: 'Umbrella', scene: 'umbrella' },
-            { id: 'park', label: 'Park', scene: 'park' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'weather',
-          title: 'Sunny Morning',
-          prompt: 'Listen and choose the weather.',
-          audio: 'It is sunny today. Let us play in the park.',
-          answer: 'sun',
-          hint: '聽 sunny。',
-          explain: 'sunny 是晴朗的。',
-          choices: [
-            { id: 'sun', label: 'Sunny', scene: 'sun' },
-            { id: 'snow', label: 'Snowy', scene: 'snow' },
-            { id: 'umbrella', label: 'Rainy', scene: 'umbrella' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'places',
-          title: 'At the Market',
-          prompt: 'Listen and choose the place.',
-          audio: 'Mom buys apples at the market.',
-          answer: 'market',
-          hint: '聽 buys apples 和 market。',
-          explain: 'market 是市場。',
-          choices: [
-            { id: 'market', label: 'Market', scene: 'market' },
-            { id: 'library', label: 'Library', scene: 'library' },
-            { id: 'watch', label: 'TV room', scene: 'watch' }
-          ]
-        }
-      ],
-      reading: [
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'Lost and Found',
-          passage: 'I found a blue pencil case under the desk. It has two pencils and a small ruler in it. Please ask Mr. Lin after class.',
-          question: 'What color is the pencil case?',
-          answer: 'blue',
-          hint: '找 pencil case 前面的顏色。',
-          explain: '文章說 a blue pencil case。',
-          choices: [
-            { id: 'blue', text: 'Blue' },
-            { id: 'green', text: 'Green' },
-            { id: 'red', text: 'Red' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'Music Class',
-          passage: 'Music class is on Tuesday morning. Please bring your recorder. We will sing a new song, too.',
-          question: 'When is music class?',
-          answer: 'tuesday',
-          hint: '找 is on 後面的時間。',
-          explain: 'Music class is on Tuesday morning.',
-          choices: [
-            { id: 'monday', text: 'Monday afternoon' },
-            { id: 'tuesday', text: 'Tuesday morning' },
-            { id: 'friday', text: 'Friday evening' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'home',
-          title: 'Family Dinner',
-          passage: 'Nina helps Dad set the table. Her brother washes the cups. They eat dinner at six thirty.',
-          question: 'What does Nina do?',
-          answer: 'table',
-          hint: '找 Nina helps Dad 後面的事。',
-          explain: 'set the table 是擺餐桌。',
-          choices: [
-            { id: 'table', text: 'She sets the table.' },
-            { id: 'cups', text: 'She washes the cups.' },
-            { id: 'books', text: 'She reads books.' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'food',
-          title: 'Snack Time',
-          passage: 'There are three bananas and two oranges on the table. Sam takes one banana for his snack.',
-          question: 'What does Sam take?',
-          answer: 'banana',
-          hint: '找 Sam takes one...',
-          explain: 'Sam takes one banana.',
-          choices: [
-            { id: 'banana', text: 'A banana' },
-            { id: 'orange', text: 'An orange' },
-            { id: 'cake', text: 'A cake' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'weather',
-          title: 'Rainy Day',
-          passage: 'It is raining now. The students cannot play outside. They draw pictures in the classroom.',
-          question: 'Where do the students draw pictures?',
-          answer: 'classroom',
-          hint: '找 draw pictures in...',
-          explain: 'They draw pictures in the classroom.',
-          choices: [
-            { id: 'classroom', text: 'In the classroom' },
-            { id: 'park', text: 'In the park' },
-            { id: 'zoo', text: 'At the zoo' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'health',
-          title: 'Feeling Sick',
-          passage: 'Jack has a headache. He tells his teacher. The teacher asks him to drink water and rest.',
-          question: 'How does Jack feel?',
-          answer: 'headache',
-          hint: '找 Jack has a...',
-          explain: 'headache 是頭痛。',
-          choices: [
-            { id: 'hungry', text: 'He is hungry.' },
-            { id: 'headache', text: 'He has a headache.' },
-            { id: 'happy', text: 'He is happy.' }
-          ]
-        },
-        {
-          level: 'kids',
-          topic: 'places',
-          title: 'Park Time',
-          passage: 'Lisa goes to the park with her dad. She rides a bike and sees two birds in the tree.',
-          question: 'Who goes to the park with Lisa?',
-          answer: 'dad',
-          hint: '找 with her...',
-          explain: 'Lisa goes to the park with her dad.',
-          choices: [
-            { id: 'mom', text: 'Her mom' },
-            { id: 'dad', text: 'Her dad' },
-            { id: 'teacher', text: 'Her teacher' }
-          ]
-        }
-      ],
-      vocab: [
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'School Words',
-          word: 'ruler',
-          phonics: 'ru-ler',
-          answer: '尺',
-          hint: '畫直線時會用到。',
-          explain: 'a ruler 是一把尺。',
-          choices: ['尺', '雨傘', '早餐']
-        },
-        {
-          level: 'kids',
-          topic: 'school',
-          title: 'School Words',
-          word: 'classmate',
-          phonics: 'class-mate',
-          answer: '同學',
-          hint: '同一班的人。',
-          explain: 'my classmate 是我的同學。',
-          choices: ['同學', '晚餐', '車站']
-        },
-        {
-          level: 'kids',
-          topic: 'home',
-          title: 'Home Words',
-          word: 'bedroom',
-          phonics: 'bed-room',
-          answer: '臥室',
-          hint: '睡覺的房間。',
-          explain: 'bedroom 是臥室。',
-          choices: ['臥室', '圖書館', '牙齒']
-        },
-        {
-          level: 'kids',
-          topic: 'food',
-          title: 'Food Words',
-          word: 'breakfast',
-          phonics: 'break-fast',
-          answer: '早餐',
-          hint: '早上吃的一餐。',
-          explain: 'eat breakfast 是吃早餐。',
-          choices: ['早餐', '外套', '公園']
-        },
-        {
-          level: 'kids',
-          topic: 'weather',
-          title: 'Weather Words',
-          word: 'rainy',
-          phonics: 'rain-y',
-          answer: '下雨的',
-          hint: '需要雨傘的天氣。',
-          explain: 'a rainy day 是下雨天。',
-          choices: ['下雨的', '安靜的', '乾淨的']
-        },
-        {
-          level: 'kids',
-          topic: 'health',
-          title: 'Health Words',
-          word: 'headache',
-          phonics: 'head-ache',
-          answer: '頭痛',
-          hint: '頭不舒服。',
-          explain: 'have a headache 是頭痛。',
-          choices: ['頭痛', '市場', '鉛筆盒']
-        },
-        {
-          level: 'kids',
-          topic: 'places',
-          title: 'Place Words',
-          word: 'park',
-          phonics: 'park',
-          answer: '公園',
-          hint: '可以散步或玩球的地方。',
-          explain: 'go to the park 是去公園。',
-          choices: ['公園', '藥', '午餐']
-        }
-      ]
-    };
-
-    Object.keys(EXTRA_BANK).forEach((mode) => {
-      BANK[mode].push(...EXTRA_BANK[mode]);
-    });
-
-    const TARGET_QUESTIONS_PER_MODE = 800;
-    const STUDENT_NAMES = ['Amy', 'Ben', 'Cindy', 'David', 'Emma', 'Jack', 'Lisa', 'Ryan'];
-    const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    const TIME_PHRASES = ['today', 'on Monday', 'on Tuesday', 'after school', 'before dinner', 'after lunch', 'in the morning', 'in the afternoon', 'at seven o clock', 'every Friday'];
-    const PLACE_PHRASES = ['in class', 'at home', 'near the window', 'with a friend', 'with her brother', 'with his sister', 'at school', 'in the park'];
-    const READING_DETAILS = [
-      'The note is short and easy to read.',
-      'The teacher writes the time on the board.',
-      'The children talk about it after class.',
-      'The family checks the plan together.',
-      'The student puts the things in a blue bag.',
-      'Everyone says thank you at the end.',
-      'The weather is good in the morning.',
-      'The place is not far from school.',
-      'The activity takes about ten minutes.',
-      'The message is for young students.'
-    ];
-    const SCENE_LABELS = {
-      book: 'School things',
-      soccer: 'Play soccer',
-      lunch: 'Eat lunch',
-      cake: 'Cake',
-      noodles: 'Noodles',
-      milk: 'Milk',
-      sun: 'Sunny day',
-      umbrella: 'Umbrella',
-      snow: 'Snow',
-      toothache: 'Toothache',
-      sleepy: 'Sleepy',
-      running: 'Running',
-      market: 'Market',
-      library: 'Library',
-      park: 'Park',
-      clean: 'Clean the room',
-      watch: 'Watch TV',
-      sleep: 'Go to bed'
-    };
-
-    const LISTENING_PATTERNS = [
-      ['school', 'book', 'opens a book in class', '聽 open a book。', 'open a book 是打開書。'],
-      ['school', 'soccer', 'plays soccer after school', '聽 plays soccer。', 'after school 是放學後。'],
-      ['school', 'library', 'reads a book in the library', '聽 library 和 reads。', 'library 是圖書館。'],
-      ['home', 'clean', 'cleans the bedroom before dinner', '聽 cleans the bedroom。', 'clean 是打掃。'],
-      ['home', 'watch', 'watches TV with the family', '聽 watches TV。', 'watch TV 是看電視。'],
-      ['home', 'sleep', 'goes to bed at nine', '聽 goes to bed。', 'go to bed 是上床睡覺。'],
-      ['food', 'milk', 'drinks milk for breakfast', '聽 drinks milk。', 'milk 是牛奶。'],
-      ['food', 'noodles', 'eats noodles for lunch', '聽 eats noodles。', 'noodles 是麵。'],
-      ['food', 'cake', 'has a cake for the party', '聽 cake 和 party。', 'cake 是蛋糕。'],
-      ['weather', 'sun', 'plays outside on a sunny day', '聽 sunny day。', 'sunny 是晴朗的。'],
-      ['weather', 'umbrella', 'takes an umbrella on a rainy day', '聽 umbrella 和 rainy。', 'umbrella 是雨傘。'],
-      ['weather', 'snow', 'sees snow in the morning', '聽 snow。', 'snow 是雪。'],
-      ['health', 'toothache', 'has a toothache after eating candy', '聽 toothache。', 'toothache 是牙痛。'],
-      ['health', 'sleepy', 'feels sleepy after lunch', '聽 sleepy。', 'sleepy 是想睡的。'],
-      ['health', 'running', 'runs in the playground every morning', '聽 runs。', 'run 是跑步。'],
-      ['places', 'market', 'buys fruit at the market', '聽 market。', 'market 是市場。'],
-      ['places', 'park', 'rides a bike in the park', '聽 park。', 'park 是公園。'],
-      ['places', 'library', 'goes to the library on Friday', '聽 goes to the library。', 'library 是圖書館。']
-    ];
-
-    const READING_PATTERNS = [
-      {
-        topic: 'school',
-        title: 'Class Job',
-        make(name, day) {
-          return {
-            passage: `${name} is the class helper on ${day}. ${name} cleans the board and gives notebooks to the teacher.`,
-            question: `What does ${name} clean?`,
-            answer: 'board',
-            choices: [{ id: 'board', text: 'The board' }, { id: 'window', text: 'The window' }, { id: 'bike', text: 'The bike' }],
-            hint: '找 cleans 後面的東西。',
-            explain: '文章說 cleans the board。'
-          };
-        }
-      },
-      {
-        topic: 'school',
-        title: 'Book Day',
-        make(name, day) {
-          return {
-            passage: `On ${day}, ${name} brings a storybook to school. The book is about a small dog and a red ball.`,
-            question: 'What is the book about?',
-            answer: 'dog',
-            choices: [{ id: 'dog', text: 'A small dog' }, { id: 'cat', text: 'A black cat' }, { id: 'bird', text: 'A blue bird' }],
-            hint: '找 about 後面的內容。',
-            explain: '文章說 about a small dog。'
-          };
-        }
-      },
-      {
-        topic: 'home',
-        title: 'Morning at Home',
-        make(name, day) {
-          return {
-            passage: `${name} gets up at six forty on ${day}. After breakfast, ${name} puts the lunch box in the bag.`,
-            question: 'What does the student put in the bag?',
-            answer: 'lunch-box',
-            choices: [{ id: 'lunch-box', text: 'A lunch box' }, { id: 'umbrella', text: 'An umbrella' }, { id: 'ball', text: 'A ball' }],
-            hint: '找 puts 後面的物品。',
-            explain: '文章說 puts the lunch box in the bag。'
-          };
-        }
-      },
-      {
-        topic: 'home',
-        title: 'Helping Mom',
-        make(name, day) {
-          return {
-            passage: `${name} helps Mom after dinner. ${name} washes three cups and puts them on the table.`,
-            question: 'How many cups does the student wash?',
-            answer: 'three',
-            choices: [{ id: 'two', text: 'Two' }, { id: 'three', text: 'Three' }, { id: 'five', text: 'Five' }],
-            hint: '找 washes 後面的數字。',
-            explain: '文章說 washes three cups。'
-          };
-        }
-      },
-      {
-        topic: 'food',
-        title: 'Picnic Food',
-        make(name, day) {
-          return {
-            passage: `${name} has a picnic with friends on ${day}. They bring sandwiches, apples, and water.`,
-            question: 'What do they bring to drink?',
-            answer: 'water',
-            choices: [{ id: 'juice', text: 'Juice' }, { id: 'water', text: 'Water' }, { id: 'milk', text: 'Milk' }],
-            hint: '找飲料。',
-            explain: '文章列出 sandwiches, apples, and water。'
-          };
-        }
-      },
-      {
-        topic: 'food',
-        title: 'Snack Shop',
-        make(name, day) {
-          return {
-            passage: `${name} goes to the snack shop after school. ${name} buys bread for Dad and milk for Mom.`,
-            question: 'Who is the milk for?',
-            answer: 'mom',
-            choices: [{ id: 'dad', text: 'Dad' }, { id: 'mom', text: 'Mom' }, { id: 'teacher', text: 'Teacher' }],
-            hint: '找 milk for...',
-            explain: '文章說 milk for Mom。'
-          };
-        }
-      },
-      {
-        topic: 'weather',
-        title: 'Weather Report',
-        make(name, day) {
-          return {
-            passage: `The weather report says ${day} will be cloudy. ${name} will wear a jacket and bring a hat.`,
-            question: 'What will the weather be like?',
-            answer: 'cloudy',
-            choices: [{ id: 'sunny', text: 'Sunny' }, { id: 'cloudy', text: 'Cloudy' }, { id: 'snowy', text: 'Snowy' }],
-            hint: '找 will be 後面的天氣。',
-            explain: '文章說 will be cloudy。'
-          };
-        }
-      },
-      {
-        topic: 'weather',
-        title: 'Rain Plan',
-        make(name, day) {
-          return {
-            passage: `It is rainy after lunch. ${name} cannot play basketball outside, so ${name} reads comics in the classroom.`,
-            question: 'Why can the student not play outside?',
-            answer: 'rainy',
-            choices: [{ id: 'rainy', text: 'It is rainy.' }, { id: 'hot', text: 'It is hot.' }, { id: 'late', text: 'It is late.' }],
-            hint: '找第一句的天氣。',
-            explain: '文章說 It is rainy after lunch。'
-          };
-        }
-      },
-      {
-        topic: 'health',
-        title: 'Nurse Note',
-        make(name, day) {
-          return {
-            passage: `${name} has a headache in the morning. The nurse asks ${name} to drink water and rest for ten minutes.`,
-            question: 'What problem does the student have?',
-            answer: 'headache',
-            choices: [{ id: 'headache', text: 'A headache' }, { id: 'toothache', text: 'A toothache' }, { id: 'cold', text: 'A cold' }],
-            hint: '找 has a...',
-            explain: '文章說 has a headache。'
-          };
-        }
-      },
-      {
-        topic: 'health',
-        title: 'Sports Day',
-        make(name, day) {
-          return {
-            passage: `${name} runs too fast on Sports Day. ${name} feels tired and sits under a tree.`,
-            question: 'How does the student feel?',
-            answer: 'tired',
-            choices: [{ id: 'angry', text: 'Angry' }, { id: 'tired', text: 'Tired' }, { id: 'hungry', text: 'Hungry' }],
-            hint: '找 feels 後面的感覺。',
-            explain: '文章說 feels tired。'
-          };
-        }
-      },
-      {
-        topic: 'places',
-        title: 'Library Visit',
-        make(name, day) {
-          return {
-            passage: `${name} visits the library on ${day}. ${name} borrows two books and reads one story there.`,
-            question: 'How many books does the student borrow?',
-            answer: 'two',
-            choices: [{ id: 'one', text: 'One' }, { id: 'two', text: 'Two' }, { id: 'three', text: 'Three' }],
-            hint: '找 borrows 後面的數字。',
-            explain: '文章說 borrows two books。'
-          };
-        }
-      },
-      {
-        topic: 'places',
-        title: 'Market Trip',
-        make(name, day) {
-          return {
-            passage: `${name} goes to the market with Grandpa. They buy tomatoes, eggs, and a small cake.`,
-            question: 'Who goes to the market with the student?',
-            answer: 'grandpa',
-            choices: [{ id: 'mom', text: 'Mom' }, { id: 'grandpa', text: 'Grandpa' }, { id: 'friend', text: 'A friend' }],
-            hint: '找 with 後面的人。',
-            explain: '文章說 with Grandpa。'
-          };
-        }
-      }
-    ];
-
-    const GENERATED_WORDS = [
-      ['apple', '蘋果', 'food', 'ap-ple'], ['banana', '香蕉', 'food', 'ba-na-na'], ['orange', '柳橙', 'food', 'or-ange'],
-      ['bread', '麵包', 'food', 'bread'], ['water', '水', 'food', 'wa-ter'], ['juice', '果汁', 'food', 'juice'],
-      ['sandwich', '三明治', 'food', 'sand-wich'], ['tomato', '番茄', 'food', 'to-ma-to'], ['egg', '蛋', 'food', 'egg'],
-      ['dinner', '晚餐', 'food', 'din-ner'], ['lunch', '午餐', 'food', 'lunch'], ['hungry', '餓的', 'food', 'hun-gry'],
-      ['teacher', '老師', 'school', 'teach-er'], ['student', '學生', 'school', 'stu-dent'], ['notebook', '筆記本', 'school', 'note-book'],
-      ['pencil', '鉛筆', 'school', 'pen-cil'], ['eraser', '橡皮擦', 'school', 'e-ras-er'], ['desk', '書桌', 'school', 'desk'],
-      ['chair', '椅子', 'school', 'chair'], ['board', '黑板', 'school', 'board'], ['homework', '作業', 'school', 'home-work'],
-      ['lesson', '課程', 'school', 'les-son'], ['answer', '答案', 'school', 'an-swer'], ['question', '問題', 'school', 'ques-tion'],
-      ['family', '家人', 'home', 'fam-i-ly'], ['mother', '母親', 'home', 'moth-er'], ['father', '父親', 'home', 'fa-ther'],
-      ['sister', '姊妹', 'home', 'sis-ter'], ['brother', '兄弟', 'home', 'broth-er'], ['kitchen', '廚房', 'home', 'kitch-en'],
-      ['table', '桌子', 'home', 'ta-ble'], ['window', '窗戶', 'home', 'win-dow'], ['door', '門', 'home', 'door'],
-      ['garden', '花園', 'home', 'gar-den'], ['evening', '傍晚', 'home', 'eve-ning'], ['morning', '早晨', 'home', 'morn-ing'],
-      ['sunny', '晴朗的', 'weather', 'sun-ny'], ['windy', '有風的', 'weather', 'wind-y'], ['hot', '熱的', 'weather', 'hot'],
-      ['cold', '冷的', 'weather', 'cold'], ['warm', '溫暖的', 'weather', 'warm'], ['cool', '涼爽的', 'weather', 'cool'],
-      ['storm', '暴風雨', 'weather', 'storm'], ['jacket', '外套', 'weather', 'jack-et'], ['hat', '帽子', 'weather', 'hat'],
-      ['boots', '靴子', 'weather', 'boots'], ['outside', '在外面', 'weather', 'out-side'], ['inside', '在裡面', 'weather', 'in-side'],
-      ['doctor', '醫生', 'health', 'doc-tor'], ['nurse', '護理師', 'health', 'nurse'], ['fever', '發燒', 'health', 'fe-ver'],
-      ['cough', '咳嗽', 'health', 'cough'], ['tired', '疲倦的', 'health', 'tired'], ['rest', '休息', 'health', 'rest'],
-      ['hand', '手', 'health', 'hand'], ['foot', '腳', 'health', 'foot'], ['eye', '眼睛', 'health', 'eye'],
-      ['ear', '耳朵', 'health', 'ear'], ['healthy', '健康的', 'health', 'health-y'], ['sad', '難過的', 'health', 'sad'],
-      ['happy', '快樂的', 'health', 'hap-py'], ['library', '圖書館', 'places', 'li-brar-y'], ['classroom', '教室', 'places', 'class-room'],
-      ['playground', '操場', 'places', 'play-ground'], ['zoo', '動物園', 'places', 'zoo'], ['shop', '商店', 'places', 'shop'],
-      ['hospital', '醫院', 'places', 'hos-pi-tal'], ['museum', '博物館', 'places', 'mu-se-um'], ['restaurant', '餐廳', 'places', 'res-tau-rant'],
-      ['street', '街道', 'places', 'street'], ['bus', '公車', 'places', 'bus'], ['train', '火車', 'places', 'train'],
-      ['ticket', '票', 'places', 'tick-et'], ['borrow', '借用', 'school', 'bor-row'], ['quiet', '安靜的', 'school', 'qui-et'],
-      ['listen', '聽', 'school', 'lis-ten'], ['speak', '說', 'school', 'speak'], ['write', '寫', 'school', 'write'],
-      ['draw', '畫', 'school', 'draw'], ['jump', '跳', 'health', 'jump'], ['walk', '走路', 'health', 'walk'],
-      ['clean', '打掃', 'home', 'clean'], ['cook', '煮飯', 'home', 'cook'], ['wash', '清洗', 'home', 'wash'],
-      ['read', '閱讀', 'school', 'read'], ['bring', '帶來', 'school', 'bring'], ['visit', '拜訪', 'places', 'vis-it'],
-      ['picnic', '野餐', 'places', 'pic-nic'], ['movie', '電影', 'home', 'mov-ie'], ['music', '音樂', 'school', 'mu-sic']
-    ];
-
-    const VOCAB_ADJECTIVES = [
-      ['big', '大的'], ['small', '小的'], ['red', '紅色的'], ['blue', '藍色的'], ['green', '綠色的'],
-      ['yellow', '黃色的'], ['new', '新的'], ['old', '舊的'], ['clean', '乾淨的'], ['dirty', '髒的'],
-      ['happy', '快樂的'], ['sad', '難過的'], ['fast', '快的'], ['slow', '慢的'], ['long', '長的'],
-      ['short', '短的'], ['hot', '熱的'], ['cold', '冷的'], ['warm', '溫暖的'], ['cool', '涼爽的']
-    ];
-    const VOCAB_NOUNS = [
-      ['book', '書', 'school'], ['bag', '書包', 'school'], ['desk', '書桌', 'school'], ['chair', '椅子', 'school'],
-      ['pencil', '鉛筆', 'school'], ['ruler', '尺', 'school'], ['notebook', '筆記本', 'school'], ['classroom', '教室', 'school'],
-      ['apple', '蘋果', 'food'], ['banana', '香蕉', 'food'], ['orange', '柳橙', 'food'], ['cake', '蛋糕', 'food'],
-      ['sandwich', '三明治', 'food'], ['egg', '蛋', 'food'], ['bread', '麵包', 'food'], ['lunch box', '便當盒', 'food'],
-      ['room', '房間', 'home'], ['table', '桌子', 'home'], ['window', '窗戶', 'home'], ['door', '門', 'home'],
-      ['kitchen', '廚房', 'home'], ['garden', '花園', 'home'], ['bed', '床', 'home'], ['cup', '杯子', 'home'],
-      ['hat', '帽子', 'weather'], ['jacket', '外套', 'weather'], ['umbrella', '雨傘', 'weather'], ['boots', '靴子', 'weather'],
-      ['day', '日子', 'weather'], ['morning', '早晨', 'weather'], ['sky', '天空', 'weather'], ['cloud', '雲', 'weather'],
-      ['hand', '手', 'health'], ['foot', '腳', 'health'], ['eye', '眼睛', 'health'], ['ear', '耳朵', 'health'],
-      ['doctor', '醫生', 'health'], ['nurse', '護理師', 'health'], ['medicine', '藥', 'health'], ['water bottle', '水壺', 'health'],
-      ['park', '公園', 'places'], ['library', '圖書館', 'places'], ['market', '市場', 'places'], ['zoo', '動物園', 'places'],
-      ['shop', '商店', 'places'], ['station', '車站', 'places'], ['street', '街道', 'places'], ['bus', '公車', 'places']
-    ];
-    const VOCAB_ACTIONS = [
-      ['read', '閱讀'], ['write', '寫'], ['draw', '畫'], ['listen to', '聽'], ['speak to', '和...說話'],
-      ['bring', '帶來'], ['borrow', '借用'], ['clean', '打掃'], ['wash', '清洗'], ['cook', '煮'],
-      ['eat', '吃'], ['drink', '喝'], ['buy', '買'], ['visit', '參觀'], ['walk to', '走去'],
-      ['run in', '在...跑步'], ['play with', '和...玩'], ['look at', '看著'], ['put away', '收好'], ['take', '拿']
-    ];
-
-    function makePictureChoices(answerScene, index) {
-      const scenes = Object.keys(SCENE_LABELS);
-      const distractors = scenes.filter((scene) => scene !== answerScene);
-      const first = distractors[index % distractors.length];
-      const second = distractors[(index + 7) % distractors.length];
-      return [answerScene, first, second].map((scene) => ({
-        id: scene,
-        label: SCENE_LABELS[scene],
-        scene
-      }));
-    }
-
-    function getGeneratedDifficulty(index) {
-      const bucket = index % 12;
-      if (bucket < 5) return 'easy';
-      if (bucket < 9) return 'medium';
-      return 'hard';
-    }
-
-    function addGeneratedListeningQuestions() {
-      let index = 0;
-      while (BANK.listening.length < TARGET_QUESTIONS_PER_MODE) {
-        const pattern = LISTENING_PATTERNS[index % LISTENING_PATTERNS.length];
-        const name = STUDENT_NAMES[index % STUDENT_NAMES.length];
-        const timePhrase = TIME_PHRASES[Math.floor(index / LISTENING_PATTERNS.length) % TIME_PHRASES.length];
-        const placePhrase = PLACE_PHRASES[Math.floor(index / (LISTENING_PATTERNS.length * TIME_PHRASES.length)) % PLACE_PHRASES.length];
-        const difficulty = getGeneratedDifficulty(index);
-        const [topic, scene, action, hint, explain] = pattern;
-        BANK.listening.push({
-          level: 'kids',
-          difficulty,
-          topic,
-          title: `Daily Listening ${index + 1}`,
-          prompt: 'Listen and choose the picture.',
-          audio: difficulty === 'hard'
-            ? `${name} ${action} ${timePhrase} ${placePhrase}.`
-            : `${name} ${action} ${timePhrase}.`,
-          answer: scene,
-          hint,
-          explain,
-          choices: makePictureChoices(scene, index)
-        });
-        index += 1;
-      }
-    }
-
-    function addGeneratedReadingQuestions() {
-      let index = 0;
-      while (BANK.reading.length < TARGET_QUESTIONS_PER_MODE) {
-        const pattern = READING_PATTERNS[index % READING_PATTERNS.length];
-        const name = STUDENT_NAMES[index % STUDENT_NAMES.length];
-        const day = DAYS[index % DAYS.length];
-        const detail = READING_DETAILS[Math.floor(index / READING_PATTERNS.length) % READING_DETAILS.length];
-        const difficulty = getGeneratedDifficulty(index);
-        const made = pattern.make(name, day);
-        BANK.reading.push({
-          level: 'kids',
-          difficulty,
-          topic: pattern.topic,
-          title: `${pattern.title} ${index + 1}`,
-          passage: difficulty === 'easy' ? made.passage : `${made.passage} ${detail}`,
-          question: made.question,
-          answer: made.answer,
-          hint: made.hint,
-          explain: made.explain,
-          choices: made.choices
-        });
-        index += 1;
-      }
-    }
-
-    function makeGeneratedVocabItem(index) {
-      const difficulty = getGeneratedDifficulty(index);
-      if (difficulty === 'easy' && index < GENERATED_WORDS.length) {
-        const [word, answer, topic, phonics] = GENERATED_WORDS[index];
-        return { word, answer, topic, phonics, difficulty };
-      }
-
-      if (difficulty !== 'hard') {
-        const adjective = VOCAB_ADJECTIVES[index % VOCAB_ADJECTIVES.length];
-        const noun = VOCAB_NOUNS[Math.floor(index / VOCAB_ADJECTIVES.length) % VOCAB_NOUNS.length];
-        return {
-          word: `${adjective[0]} ${noun[0]}`,
-          answer: `${adjective[1]}${noun[1]}`,
-          topic: noun[2],
-          phonics: `${adjective[0]} ${noun[0]}`,
-          difficulty
-        };
-      }
-
-      const action = VOCAB_ACTIONS[index % VOCAB_ACTIONS.length];
-      const noun = VOCAB_NOUNS[Math.floor(index / VOCAB_ACTIONS.length) % VOCAB_NOUNS.length];
-      return {
-        word: `${action[0]} ${noun[0]}`,
-        answer: `${action[1]}${noun[1]}`,
-        topic: noun[2],
-        phonics: `${action[0]} ${noun[0]}`,
-        difficulty
-      };
-    }
-
-    function addGeneratedVocabQuestions() {
-      let index = 0;
-      while (BANK.vocab.length < TARGET_QUESTIONS_PER_MODE) {
-        const item = makeGeneratedVocabItem(index);
-        const first = makeGeneratedVocabItem(index + 137).answer;
-        const second = makeGeneratedVocabItem(index + 293).answer;
-        BANK.vocab.push({
-          level: 'kids',
-          difficulty: item.difficulty,
-          topic: item.topic,
-          title: `Word Practice ${index + 1}`,
-          word: item.word,
-          phonics: item.phonics,
-          answer: item.answer,
-          hint: `想想 ${item.word} 在生活或學校情境中的意思。`,
-          explain: `${item.word} 的意思是「${item.answer}」。`,
-          choices: [item.answer, first, second]
-        });
-        index += 1;
-      }
-    }
-
-    addGeneratedListeningQuestions();
-    addGeneratedReadingQuestions();
-    addGeneratedVocabQuestions();
+    const { BANK, SCENE_LABELS, SCENE_MAP } = window.GEPT_QUESTIONS;
 
     const ICONS = {
       speaker: '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Zm12.2 8.1l-1.4-1.4A5 5 0 0 0 16 12a5 5 0 0 0-1.2-3.2l1.4-1.4A7 7 0 0 1 18 12a7 7 0 0 1-1.8 5.1Zm2.7 2.7-1.4-1.4A9 9 0 0 0 20 12a9 9 0 0 0-2.5-6.3l1.4-1.4A11 11 0 0 1 22 12a11 11 0 0 1-3.1 7.8Z"/></svg>',
@@ -2035,6 +1248,8 @@
     const STORAGE_KEY = 'geptKidsEnglishLab.v1';
     const SESSION_LIMIT = 10;
     const RECENT_LIMIT = 18;
+    const RECENT_LISTENING_SCENE_LIMIT = 5;
+    const RECENT_LISTENING_DETAIL_LIMIT = 3;
     let state = {
       mode: 'listening',
       level: 'kids',
@@ -2046,6 +1261,9 @@
       questionQueue: [],
       queueKey: '',
       recentIds: [],
+      recentListeningScenes: [],
+      recentListeningActions: [],
+      recentListeningObjects: [],
       sessionTotal: 0,
       sessionCorrect: 0,
       stats: loadStats()
@@ -2075,6 +1293,7 @@
       guideModal: document.getElementById('guideModal'),
       closeGuideBtn: document.getElementById('closeGuideBtn'),
       resetBtn: document.getElementById('resetBtn'),
+      practiceStage: document.querySelector('.practice-stage'),
       topbar: document.querySelector('.topbar')
     };
 
@@ -2133,6 +1352,9 @@
       state.questionQueue = [];
       state.queueKey = '';
       state.recentIds = [];
+      state.recentListeningScenes = [];
+      state.recentListeningActions = [];
+      state.recentListeningObjects = [];
     }
 
     function buildQuestionQueue() {
@@ -2140,7 +1362,7 @@
       const lastId = state.current && getQuestionId(state.current);
       const freshItems = activeBank.filter((item) => {
         const id = getQuestionId(item);
-        return id !== lastId && !state.recentIds.includes(id);
+        return id !== lastId && !state.recentIds.includes(id) && !isRecentListeningDetail(item);
       });
       const fallbackItems = activeBank.filter((item) => getQuestionId(item) !== lastId);
       const source = freshItems.length ? freshItems : (fallbackItems.length ? fallbackItems : activeBank);
@@ -2152,16 +1374,61 @@
       if (!state.questionQueue.length || state.queueKey !== getBankKey()) {
         buildQuestionQueue();
       }
-      state.current = state.questionQueue.shift();
+      const nextIndex = state.questionQueue.findIndex((item) => !isRecentListeningDetail(item));
+      const pickedIndex = nextIndex >= 0 ? nextIndex : 0;
+      state.current = state.questionQueue.splice(pickedIndex, 1)[0];
       const currentId = getQuestionId(state.current);
       state.recentIds = [currentId, ...state.recentIds.filter((id) => id !== currentId)].slice(0, RECENT_LIMIT);
+      rememberListeningScene(state.current);
       state.selected = null;
       state.answered = false;
       renderQuestion();
+      scrollPracticeIntoView();
     }
 
     function getQuestionId(item) {
       return `${item.title}:${item.answer || item.word}`;
+    }
+
+    function getListeningScene(item) {
+      if (state.mode !== 'listening' || !item) return '';
+      return item.answer || '';
+    }
+
+    function getListeningSceneConfig(item) {
+      const scene = getListeningScene(item);
+      return scene ? SCENE_MAP[scene] : null;
+    }
+
+    function isRecentListeningDetail(item) {
+      const scene = getListeningScene(item);
+      const config = getListeningSceneConfig(item);
+      if (scene && state.recentListeningScenes.includes(scene)) return true;
+      if (config?.action && state.recentListeningActions.includes(config.action)) return true;
+      if (config?.object && state.recentListeningObjects.includes(config.object)) return true;
+      return false;
+    }
+
+    function rememberListeningScene(item) {
+      const scene = getListeningScene(item);
+      if (!scene) return;
+      const config = getListeningSceneConfig(item);
+      state.recentListeningScenes = [
+        scene,
+        ...state.recentListeningScenes.filter((recentScene) => recentScene !== scene)
+      ].slice(0, RECENT_LISTENING_SCENE_LIMIT);
+      if (config?.action) {
+        state.recentListeningActions = [
+          config.action,
+          ...state.recentListeningActions.filter((action) => action !== config.action)
+        ].slice(0, RECENT_LISTENING_DETAIL_LIMIT);
+      }
+      if (config?.object) {
+        state.recentListeningObjects = [
+          config.object,
+          ...state.recentListeningObjects.filter((object) => object !== config.object)
+        ].slice(0, RECENT_LISTENING_DETAIL_LIMIT);
+      }
     }
 
     function renderQuestion() {
@@ -2323,6 +1590,7 @@
     function showFeedback(good, title, text) {
       els.feedback.className = `feedback is-open ${good ? 'good' : 'try'}`;
       els.feedback.innerHTML = `${good ? ICONS.check : ICONS.info}<span>${title}<small>${text}</small></span>`;
+      keepFeedbackVisible();
     }
 
     function nextQuestion() {
@@ -2393,7 +1661,125 @@
         .map((item) => item.value);
     }
 
+    function isMobileLayout() {
+      return window.matchMedia('(max-width: 700px)').matches;
+    }
+
+    function scrollPracticeIntoView() {
+      if (!isMobileLayout() || !els.practiceStage) return;
+      window.requestAnimationFrame(() => {
+        els.topbar?.classList.add('is-hidden');
+        els.practiceStage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    function keepFeedbackVisible() {
+      if (!isMobileLayout() || !els.feedback.classList.contains('is-open')) return;
+      window.requestAnimationFrame(() => {
+        els.feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    }
+
+    function drawSceneBackground(config) {
+      const place = config.place || '';
+      const weather = config.weather || '';
+      const sky = weather === 'rainy' ? '#dce9f3'
+        : weather === 'snowy' ? '#eef6ff'
+          : weather === 'hot' || weather === 'sunny' ? '#eaf6ff'
+            : '#e9f4ff';
+      const ground = place.includes('kitchen') || place.includes('dining') ? '#fff1d8'
+        : place.includes('library') || place.includes('classroom') ? '#edf3f4'
+          : place.includes('market') || place.includes('street') || place.includes('station') ? '#e6e8eb'
+            : place.includes('park') || place.includes('garden') || place.includes('playground') ? '#d8ebd9'
+              : '#eef1e8';
+      const weatherMark = weather === 'rainy'
+        ? '<path d="M128 18l-6 12M145 18l-6 12M136 34l-6 12" stroke="#2d6fb7" stroke-width="4" stroke-linecap="round"/>'
+        : weather === 'snowy'
+          ? '<path d="M136 18v28M122 26l28 12M150 26l-28 12" stroke="#2d6fb7" stroke-width="3" stroke-linecap="round"/>'
+          : weather === 'cloudy'
+            ? '<circle cx="130" cy="28" r="15" fill="#fff"/><circle cx="148" cy="31" r="12" fill="#fff"/><rect x="124" y="30" width="34" height="12" rx="6" fill="#fff"/>'
+            : weather === 'windy'
+              ? '<path d="M118 24h42M128 38h28" stroke="#7aa6c2" stroke-width="4" stroke-linecap="round"/>'
+              : '<circle cx="142" cy="26" r="14" fill="#f5b945"/>';
+      const placeMark = place.includes('classroom')
+        ? '<rect x="18" y="18" width="46" height="28" rx="4" fill="#fff8e7"/><path d="M26 30h30M26 38h22" stroke="#21313c" stroke-width="3"/>'
+        : place.includes('library')
+          ? '<rect x="18" y="20" width="44" height="42" fill="#fff"/><rect x="24" y="28" width="8" height="28" fill="#2d6fb7"/><rect x="36" y="28" width="8" height="28" fill="#ef6f5e"/><rect x="48" y="28" width="8" height="28" fill="#f5b945"/>'
+          : place.includes('kitchen') || place.includes('dining')
+            ? '<rect x="18" y="48" width="48" height="26" rx="5" fill="#fff"/><path d="M22 60h40M30 48V36h24v12" stroke="#7b5636" stroke-width="4"/>'
+            : place.includes('market') || place.includes('shop')
+              ? '<rect x="18" y="38" width="48" height="34" fill="#fff"/><path d="M16 38h52l-8-14H24z" fill="#ef6f5e"/>'
+              : place.includes('station')
+                ? '<rect x="16" y="36" width="54" height="38" fill="#fff"/><path d="M14 36h58L60 24H26z" fill="#2d6fb7"/>'
+                : place.includes('clinic') || place.includes('hospital')
+                  ? '<rect x="18" y="30" width="48" height="42" rx="5" fill="#fff"/><path d="M42 40v22M31 51h22" stroke="#ef6f5e" stroke-width="5"/>'
+                  : place.includes('park') || place.includes('garden') || place.includes('playground')
+                    ? '<rect x="34" y="42" width="9" height="34" fill="#7b5636"/><circle cx="39" cy="34" r="18" fill="#2f8f83"/>'
+                    : '';
+      return `<rect x="4" y="4" width="172" height="92" rx="8" fill="${sky}"/><rect x="0" y="72" width="180" height="28" fill="${ground}"/>${weatherMark}${placeMark}`;
+    }
+
+    function drawSceneActor(config) {
+      const color = config.actor === 'girl' || config.actor === 'mom' ? '#ef6f5e'
+        : config.actor === 'teacher' ? '#7663b6'
+          : config.actor === 'dad' ? '#21313c'
+            : config.actor === 'family' ? '#2f8f83'
+              : '#2d6fb7';
+      const extra = config.actor === 'family'
+        ? '<circle cx="66" cy="44" r="9" fill="#ffcf89"/><path d="M54 80c3-18 9-28 16-28s13 10 16 28z" fill="#ef6f5e"/>'
+        : '';
+      const arm = ['write', 'draw', 'point', 'give', 'take', 'hold', 'buy', 'order', 'choose', 'put', 'set', 'wash', 'brush', 'feed'].includes(config.action)
+        ? '<path d="M96 58l22-9" stroke="#ffcf89" stroke-width="7" stroke-linecap="round"/>'
+        : '<path d="M93 58l16 15" stroke="#ffcf89" stroke-width="7" stroke-linecap="round"/>';
+      return `${extra}<circle cx="84" cy="36" r="13" fill="#ffcf89"/><path d="M64 84c5-28 14-40 25-40s20 12 25 40z" fill="${color}"/><circle cx="79" cy="34" r="2.5" fill="#21313c"/><circle cx="89" cy="34" r="2.5" fill="#21313c"/>${arm}<path d="M78 49l-12 16M92 49l12 16" stroke="#ffcf89" stroke-width="6" stroke-linecap="round"/>`;
+    }
+
+    function drawSceneObject(config) {
+      const object = config.object || '';
+      if (object.includes('book') || object.includes('comic') || object.includes('storybook')) return '<rect x="112" y="48" width="28" height="22" rx="3" fill="#fff"/><path d="M126 49v20M116 56h8M130 56h8" stroke="#2d6fb7" stroke-width="3"/>';
+      if (object.includes('pencil')) return '<path d="M112 68l34-24 8 8-34 24-12 3z" fill="#f5b945"/><path d="M146 44l8-6 8 8-8 6z" fill="#ef6f5e"/>';
+      if (object.includes('board')) return '<rect x="110" y="28" width="48" height="30" rx="4" fill="#fff8e7"/><path d="M118 42h32M118 50h22" stroke="#21313c" stroke-width="3"/>';
+      if (object.includes('bag')) return '<rect x="112" y="50" width="34" height="28" rx="6" fill="#2d6fb7"/><path d="M120 50c2-13 18-13 20 0" stroke="#21313c" stroke-width="4" fill="none"/>';
+      if (object.includes('homework') || object.includes('question') || object.includes('weather report')) return '<rect x="112" y="42" width="34" height="36" rx="4" fill="#fff"/><path d="M119 52h20M119 61h20M119 70h12" stroke="#21313c" stroke-width="3"/>';
+      if (object.includes('soccer')) return '<circle cx="132" cy="65" r="16" fill="#fff"/><path d="M132 49l8 7-3 10h-10l-3-10zM116 65h13M135 65h13" stroke="#21313c" stroke-width="2" fill="none"/>';
+      if (object.includes('TV')) return '<rect x="110" y="36" width="48" height="30" rx="5" fill="#21313c"/><rect x="117" y="43" width="34" height="16" fill="#e9f4ff"/>';
+      if (object.includes('bed')) return '<rect x="108" y="56" width="52" height="24" rx="7" fill="#fff"/><rect x="112" y="48" width="22" height="18" rx="6" fill="#ffcf89"/><path d="M134 56h26v24h-42" fill="#2d6fb7"/>';
+      if (object.includes('flower')) return '<path d="M130 78V50" stroke="#2f8f83" stroke-width="4"/><circle cx="130" cy="43" r="6" fill="#ef6f5e"/><circle cx="121" cy="48" r="6" fill="#f5b945"/><circle cx="139" cy="48" r="6" fill="#2d6fb7"/>';
+      if (object.includes('cup') || object.includes('juice') || object.includes('milk') || object.includes('water')) return '<path d="M116 42h34l-5 36h-24z" fill="#fff" stroke="#2d6fb7" stroke-width="4"/><path d="M150 52h9c8 0 8 14 0 14h-11" fill="none" stroke="#2d6fb7" stroke-width="4"/>';
+      if (object.includes('noodles') || object.includes('soup') || object.includes('meal') || object.includes('salad') || object.includes('dinner') || object.includes('lunch')) return '<path d="M108 58h52l-8 22h-36z" fill="#fff"/><path d="M116 58c8 9 28 9 36 0" stroke="#ef6f5e" stroke-width="4" fill="none"/><path d="M122 49c8-6 15 6 23 0" stroke="#f5b945" stroke-width="4" fill="none"/>';
+      if (object.includes('apple') || object.includes('orange') || object.includes('banana') || object.includes('fruit') || object.includes('tomato')) return '<circle cx="124" cy="62" r="13" fill="#ef6f5e"/><circle cx="146" cy="62" r="13" fill="#f5b945"/><path d="M136 48c-2-8 5-12 12-12" stroke="#7b5636" stroke-width="4"/>';
+      if (object.includes('sandwich') || object.includes('bread') || object.includes('cake') || object.includes('egg')) return '<path d="M112 74 134 46l28 28z" fill="#fff8e7" stroke="#21313c" stroke-width="3"/><path d="M120 68h34" stroke="#2f8f83" stroke-width="5"/>';
+      if (object.includes('umbrella') || object.includes('raincoat')) return '<path d="M110 52a28 28 0 0 1 56 0z" fill="#ef6f5e"/><path d="M138 52v24c0 8 13 8 13 0" stroke="#21313c" stroke-width="5" fill="none"/>';
+      if (object.includes('jacket') || object.includes('hat') || object.includes('boots')) return '<path d="M116 42l14-8h14l14 8 8 36h-24V54h-10v24h-24z" fill="#2d6fb7"/><path d="M128 34v44M144 34v44" stroke="#fff" stroke-width="3"/>';
+      if (object.includes('doctor') || object.includes('nurse') || object.includes('medicine') || object.includes('temperature')) return '<rect x="116" y="44" width="38" height="30" rx="8" fill="#fff" stroke="#2d6fb7" stroke-width="4"/><path d="M135 49v20M125 59h20" stroke="#ef6f5e" stroke-width="4"/>';
+      if (object.includes('toothache') || object.includes('headache') || object.includes('fever') || object.includes('foot') || object.includes('ears') || object.includes('mouth')) return '<circle cx="134" cy="54" r="20" fill="#ffcf89"/><path d="M124 62c6-7 14-7 20 0" stroke="#21313c" stroke-width="4" fill="none"/><path d="M154 38l10-10M158 50l14-2" stroke="#ef6f5e" stroke-width="4" stroke-linecap="round"/>';
+      if (object.includes('bus') || object.includes('ticket') || object.includes('station')) return '<rect x="108" y="46" width="54" height="28" rx="6" fill="#f5b945"/><rect x="116" y="52" width="14" height="9" fill="#e9f4ff"/><rect x="136" y="52" width="14" height="9" fill="#e9f4ff"/><circle cx="120" cy="76" r="5" fill="#21313c"/><circle cx="150" cy="76" r="5" fill="#21313c"/>';
+      if (object.includes('zoo') || object.includes('museum') || object.includes('restaurant') || object.includes('library') || object.includes('park') || object.includes('playground') || object.includes('shop') || object.includes('street')) return '<rect x="112" y="42" width="44" height="34" rx="5" fill="#fff"/><path d="M110 42h48l-8-12h-32z" fill="#2d6fb7"/><path d="M124 76V58h20v18" stroke="#21313c" stroke-width="4"/>';
+      return '<rect x="114" y="46" width="42" height="30" rx="6" fill="#fff8e7" stroke="#21313c" stroke-width="3"/><path d="M124 58h22" stroke="#2d6fb7" stroke-width="4"/>';
+    }
+
+    function drawSceneActionCue(config) {
+      if (['run', 'walk', 'ride', 'play', 'fly'].includes(config.action)) {
+        return '<path d="M22 82h28M31 74l19 8-19 8" stroke="#21313c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+      }
+      if (['wash', 'drink', 'brush'].includes(config.action)) {
+        return '<circle cx="31" cy="78" r="5" fill="#2d6fb7"/><circle cx="46" cy="84" r="4" fill="#2d6fb7"/><circle cx="56" cy="76" r="3" fill="#2d6fb7"/>';
+      }
+      if (['wear', 'take', 'hold', 'put', 'set'].includes(config.action)) {
+        return '<path d="M24 84c10-12 23-12 34 0" stroke="#21313c" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="41" cy="72" r="5" fill="#f5b945"/>';
+      }
+      return '<path d="M24 82h36" stroke="#21313c" stroke-width="4" stroke-linecap="round"/><circle cx="42" cy="73" r="5" fill="#f5b945"/>';
+    }
+
+    function drawComposedScene(config) {
+      const common = 'viewBox="0 0 180 100" class="mini-illustration" role="img" aria-hidden="true"';
+      return `<svg ${common}>${drawSceneBackground(config)}${drawSceneActor(config)}${drawSceneObject(config)}${drawSceneActionCue(config)}</svg>`;
+    }
+
     function drawScene(scene) {
+      if (SCENE_MAP[scene]) {
+        return drawComposedScene(SCENE_MAP[scene]);
+      }
       const common = 'viewBox="0 0 180 100" class="mini-illustration" role="img" aria-hidden="true"';
       const base = `<rect x="4" y="4" width="172" height="92" rx="8" fill="#e9f4ff"/><rect x="0" y="72" width="180" height="28" fill="#d8ebd9"/>`;
       const scenes = {
@@ -2414,7 +1800,25 @@
         park: `${base}<rect x="84" y="44" width="12" height="38" fill="#7b5636"/><circle cx="90" cy="34" r="24" fill="#2f8f83"/><path d="M42 80h96" stroke="#21313c" stroke-width="5"/><path d="M52 58v22M128 58v22M52 58h76" stroke="#21313c" stroke-width="4"/>`,
         clean: `${base}<rect x="52" y="52" width="62" height="32" rx="5" fill="#fff"/><path d="M122 24l18 58M126 36l-32 12" stroke="#21313c" stroke-width="6" stroke-linecap="round"/><path d="M62 34h22M58 42h30" stroke="#2d6fb7" stroke-width="4" stroke-linecap="round"/>`,
         watch: `${base}<rect x="48" y="29" width="84" height="50" rx="6" fill="#21313c"/><rect x="56" y="37" width="68" height="34" fill="#e9f4ff"/><path d="M78 84h24M90 79v10" stroke="#21313c" stroke-width="5" stroke-linecap="round"/>`,
-        sleep: `${base}<rect x="44" y="51" width="92" height="30" rx="8" fill="#fff"/><rect x="50" y="43" width="36" height="22" rx="8" fill="#ffcf89"/><path d="M86 51h49v30H58" fill="#2d6fb7"/><text x="117" y="36" fill="#2d6fb7" font-size="20" font-weight="800">Zz</text>`
+        sleep: `${base}<rect x="44" y="51" width="92" height="30" rx="8" fill="#fff"/><rect x="50" y="43" width="36" height="22" rx="8" fill="#ffcf89"/><path d="M86 51h49v30H58" fill="#2d6fb7"/><text x="117" y="36" fill="#2d6fb7" font-size="20" font-weight="800">Zz</text>`,
+        pencil: `${base}<path d="M54 72 122 24l14 14-68 48-20 6z" fill="#f5b945"/><path d="m122 24 12-8 14 14-12 8z" fill="#ef6f5e"/><path d="m54 72-6 20 20-6z" fill="#21313c"/><path d="M70 66 128 26" stroke="#fff8e7" stroke-width="4"/>`,
+        desk: `${base}<rect x="46" y="42" width="88" height="22" rx="4" fill="#7b5636"/><path d="M58 64v22M122 64v22M44 42h92" stroke="#21313c" stroke-width="5" stroke-linecap="round"/><rect x="66" y="26" width="48" height="16" rx="3" fill="#fff"/>`,
+        teacher: `${base}<circle cx="90" cy="32" r="15" fill="#ffcf89"/><path d="M62 84c6-28 18-40 28-40s22 12 28 40z" fill="#2d6fb7"/><rect x="116" y="28" width="36" height="30" rx="4" fill="#fff8e7"/><path d="M123 39h22M123 48h16" stroke="#21313c" stroke-width="3"/>`,
+        homework: `${base}<rect x="54" y="28" width="72" height="54" rx="5" fill="#fff"/><path d="M66 44h44M66 56h44M66 68h28" stroke="#2d6fb7" stroke-width="4" stroke-linecap="round"/><path d="M112 74 140 46" stroke="#ef6f5e" stroke-width="6" stroke-linecap="round"/>`,
+        sandwich: `${base}<path d="M48 68 90 28l42 40z" fill="#fff8e7" stroke="#21313c" stroke-width="3"/><path d="M56 64h68" stroke="#2f8f83" stroke-width="7"/><path d="M64 56h52" stroke="#ef6f5e" stroke-width="7"/><circle cx="90" cy="47" r="5" fill="#f5b945"/>`,
+        water: `${base}<path d="M90 22c18 22 28 36 28 49 0 16-12 25-28 25s-28-9-28-25c0-13 10-27 28-49z" fill="#2d6fb7"/><path d="M78 72c6 8 18 10 26 2" stroke="#e9f4ff" stroke-width="5" stroke-linecap="round"/>`,
+        apple: `${base}<circle cx="80" cy="58" r="24" fill="#ef6f5e"/><circle cx="102" cy="58" r="24" fill="#ef6f5e"/><path d="M91 35c-2-12 8-18 17-18" stroke="#7b5636" stroke-width="5" stroke-linecap="round"/><path d="M106 22c13-4 20 3 23 12-13 3-21-1-23-12z" fill="#2f8f83"/>`,
+        jacket: `${base}<path d="M62 30 82 22h16l20 8 14 50H96V44H84v36H48z" fill="#2d6fb7"/><path d="M84 24v56M96 24v56M66 48h12M102 48h12" stroke="#fff" stroke-width="4"/><path d="M62 30 44 48M118 30l18 18" stroke="#21313c" stroke-width="5" stroke-linecap="round"/>`,
+        hat: `${base}<path d="M62 58c3-22 16-34 30-34s27 12 30 34z" fill="#f5b945"/><rect x="42" y="58" width="100" height="16" rx="8" fill="#21313c"/><path d="M70 48h44" stroke="#fff8e7" stroke-width="5" stroke-linecap="round"/>`,
+        cloudy: `${base}<circle cx="72" cy="54" r="22" fill="#fff"/><circle cx="96" cy="44" r="28" fill="#fff"/><circle cx="122" cy="56" r="20" fill="#fff"/><rect x="58" y="54" width="78" height="22" rx="11" fill="#fff"/><path d="M55 77h88" stroke="#d8e3e6" stroke-width="4" stroke-linecap="round"/>`,
+        doctor: `${base}<circle cx="90" cy="30" r="14" fill="#ffcf89"/><path d="M60 84c5-30 18-42 30-42s25 12 30 42z" fill="#fff" stroke="#2d6fb7" stroke-width="3"/><path d="M90 50v22M78 61h24" stroke="#ef6f5e" stroke-width="5" stroke-linecap="round"/>`,
+        medicine: `${base}<rect x="58" y="34" width="64" height="44" rx="10" fill="#fff" stroke="#2d6fb7" stroke-width="4"/><path d="M90 34v44M68 56h44" stroke="#ef6f5e" stroke-width="5"/><circle cx="134" cy="36" r="12" fill="#f5b945"/><circle cx="142" cy="62" r="9" fill="#2f8f83"/>`,
+        washHands: `${base}<path d="M54 64c12-14 22-12 30 0l8 12c6 9 22 6 22-6V44" fill="none" stroke="#ffcf89" stroke-width="10" stroke-linecap="round"/><path d="M124 26h30M139 26v22" stroke="#21313c" stroke-width="6" stroke-linecap="round"/><circle cx="74" cy="34" r="6" fill="#2d6fb7"/><circle cx="94" cy="26" r="5" fill="#2d6fb7"/><circle cx="106" cy="42" r="4" fill="#2d6fb7"/>`,
+        zoo: `${base}<rect x="42" y="48" width="96" height="34" rx="5" fill="#fff8e7"/><path d="M50 82V48M70 82V48M90 82V48M110 82V48M130 82V48" stroke="#21313c" stroke-width="4"/><circle cx="90" cy="32" r="16" fill="#f5b945"/><circle cx="80" cy="22" r="5" fill="#f5b945"/><circle cx="100" cy="22" r="5" fill="#f5b945"/>`,
+        bus: `${base}<rect x="42" y="38" width="96" height="38" rx="8" fill="#f5b945"/><rect x="52" y="46" width="24" height="14" fill="#e9f4ff"/><rect x="84" y="46" width="24" height="14" fill="#e9f4ff"/><circle cx="66" cy="78" r="8" fill="#21313c"/><circle cx="118" cy="78" r="8" fill="#21313c"/>`,
+        station: `${base}<path d="M48 78h84V34H48z" fill="#fff"/><path d="M42 34h96l-16-16H58z" fill="#2d6fb7"/><path d="M64 78V52h52v26M74 44h32" stroke="#21313c" stroke-width="5"/><circle cx="124" cy="54" r="8" fill="#ef6f5e"/>`,
+        garden: `${base}<path d="M52 82c6-24 18-36 34-36s28 12 34 36z" fill="#2f8f83"/><circle cx="70" cy="42" r="8" fill="#ef6f5e"/><circle cx="90" cy="34" r="8" fill="#f5b945"/><circle cx="112" cy="44" r="8" fill="#2d6fb7"/><path d="M70 50v24M90 42v30M112 52v22" stroke="#2f8f83" stroke-width="4"/>`,
+        cup: `${base}<path d="M62 34h56l-7 48H69z" fill="#fff" stroke="#2d6fb7" stroke-width="4"/><path d="M118 46h14c13 0 13 22 0 22h-17" fill="none" stroke="#2d6fb7" stroke-width="5"/><path d="M76 28c-6-8 8-10 2-18M94 28c-6-8 8-10 2-18" stroke="#d8e3e6" stroke-width="4" stroke-linecap="round"/>`
       };
       return `<svg ${common}>${scenes[scene] || scenes.book}</svg>`;
     }

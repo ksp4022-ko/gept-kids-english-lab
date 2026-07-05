@@ -212,7 +212,10 @@ GitHub repository：
 - 手機表頭自動隱藏。
 - 移除無功能分類卡。
 - 同輪防重複抽題。
+- 題庫與生成模板已從 `index.html` 拆到 `data/questions.js`。
+- Listening 圖片場景系統第一階段完成：新增 `LISTENING_SCENES` 100 個組合式 scene，並用共用 SVG 元件繪製。
+- Listening 抽題會避開最近出現過的 scene、action、object，降低圖片與動作重複率。
 
 下一個最值得做的改進：
 
-把題庫與生成模板從 `index.html` 拆出來，避免首頁檔案越來越大，也讓未來新增題型更安全。
+把 Listening 組合式 scene 從 100 個擴到至少 300 個，完成後再新增更多題型模板，例如對話題、表格題、告示題、訊息題、推論題、否定句、比較句與順序題。
