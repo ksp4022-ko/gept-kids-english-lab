@@ -561,18 +561,68 @@
     const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const TIME_PHRASES = ['today', 'on Monday', 'on Tuesday', 'after school', 'before dinner', 'after lunch', 'in the morning', 'in the afternoon', 'at seven o clock', 'every Friday'];
     const PLACE_PHRASES = ['in class', 'at home', 'near the window', 'with a friend', 'with her brother', 'with his sister', 'at school', 'in the park'];
-    const READING_DETAILS = [
-      'The note is short and easy to read.',
-      'The teacher writes the time on the board.',
-      'The children talk about it after class.',
-      'The family checks the plan together.',
-      'The student puts the things in a blue bag.',
-      'Everyone says thank you at the end.',
-      'The weather is good in the morning.',
-      'The place is not far from school.',
-      'The activity takes about ten minutes.',
-      'The message is for young students.'
-    ];
+    const READING_DETAILS_BY_TITLE = {
+      'Class Job': [
+        'The teacher says thank you after class.',
+        'The notebooks are for the next lesson.',
+        'The board is clean before lunch.'
+      ],
+      'Book Day': [
+        'The class reads quietly after lunch.',
+        'The teacher asks one question about the story.',
+        'The storybook is on the reading table.'
+      ],
+      'Morning at Home': [
+        'The bag is near the front door.',
+        'The student checks the bag before leaving home.',
+        'The lunch box is for school.'
+      ],
+      'Helping Mom': [
+        'Mom thanks the student after dinner.',
+        'The cups are clean before bedtime.',
+        'The table is ready for the family.'
+      ],
+      'Picnic Food': [
+        'The water is in a blue bottle.',
+        'They eat under a big tree.',
+        'The picnic starts after lunch.'
+      ],
+      'Snack Shop': [
+        'Dad will eat the bread after dinner.',
+        'Mom puts the milk in the fridge.',
+        'The snack shop is near the school.'
+      ],
+      'Weather Report': [
+        'The class trip starts after lunch.',
+        'The hat is for the walk outside.',
+        'The jacket keeps the student warm.'
+      ],
+      'Rain Plan': [
+        'The classroom is dry and quiet.',
+        'The basketball court is wet.',
+        'The student waits for the rain to stop.'
+      ],
+      'Nurse Note': [
+        'The nurse writes a short note to the teacher.',
+        'The student rests in the nurse office.',
+        'The student feels better after drinking water.'
+      ],
+      'Sports Day': [
+        'The student drinks water under the tree.',
+        'The teacher asks the student to rest.',
+        'The race is over before lunch.'
+      ],
+      'Library Visit': [
+        'The library card is in the school bag.',
+        'The student reads quietly at a table.',
+        'The books are due next week.'
+      ],
+      'Market Trip': [
+        'Grandpa puts the cake in a small bag.',
+        'They carry the food home together.',
+        'The market is busy in the morning.'
+      ]
+    };
     const LEGACY_SCENE_LABELS = {
       book: 'School things',
       soccer: 'Play soccer',
@@ -1206,15 +1256,16 @@
         const pattern = READING_PATTERNS[index % READING_PATTERNS.length];
         const name = STUDENT_NAMES[index % STUDENT_NAMES.length];
         const day = DAYS[index % DAYS.length];
-        const detail = READING_DETAILS[Math.floor(index / READING_PATTERNS.length) % READING_DETAILS.length];
         const difficulty = getGeneratedDifficulty(index);
         const made = pattern.make(name, day);
+        const detailPool = READING_DETAILS_BY_TITLE[pattern.title] || [];
+        const detail = detailPool[Math.floor(index / READING_PATTERNS.length) % detailPool.length] || '';
         BANK.reading.push({
           level: 'kids',
           difficulty,
           topic: pattern.topic,
           title: `${pattern.title} ${index + 1}`,
-          passage: difficulty === 'easy' ? made.passage : `${made.passage} ${detail}`,
+          passage: difficulty === 'easy' || !detail ? made.passage : `${made.passage} ${detail}`,
           question: made.question,
           answer: made.answer,
           hint: made.hint,
@@ -1286,7 +1337,14 @@
     }
 
     function makeCuratedVocabChoices(item, index) {
-      const preferred = VALID_VOCAB_ITEMS.filter((candidate) => (
+      const sameTopic = VALID_VOCAB_ITEMS.filter((candidate) => (
+        candidate.answer !== item.answer &&
+        candidate.word !== item.word &&
+        candidate.pos === item.pos &&
+        candidate.difficulty === item.difficulty &&
+        candidate.topic === item.topic
+      ));
+      const sameKind = VALID_VOCAB_ITEMS.filter((candidate) => (
         candidate.answer !== item.answer &&
         candidate.word !== item.word &&
         candidate.pos === item.pos &&
@@ -1296,13 +1354,17 @@
         candidate.answer !== item.answer &&
         candidate.word !== item.word
       ));
-      const pool = preferred.length >= 2 ? preferred : fallback;
+      const pools = [sameTopic, sameKind, fallback];
       const choices = [item.answer];
-      let cursor = index;
-      while (choices.length < 3 && pool.length) {
-        const candidate = pool[cursor % pool.length].answer;
-        if (!choices.includes(candidate)) choices.push(candidate);
-        cursor += 11;
+      pools.forEach((pool) => {
+        if (choices.length >= 3 || pool.length === 0) return;
+        for (let step = 0; step < pool.length && choices.length < 3; step += 1) {
+          const candidate = pool[(index + step) % pool.length].answer;
+          if (!choices.includes(candidate)) choices.push(candidate);
+        }
+      });
+      if (choices.length < 3) {
+        throw new Error(`Not enough unique choices for vocab item: ${item.word}`);
       }
       return choices;
     }
