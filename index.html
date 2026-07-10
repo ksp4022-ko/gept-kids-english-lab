@@ -376,6 +376,59 @@
       min-width: 0;
     }
 
+    .mode-panel,
+    .voice-panel {
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(33, 49, 60, .08);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .mode-panel .mode-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mode-panel .mode-btn {
+      min-height: 76px;
+      grid-template-columns: 38px minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-content: center;
+    }
+
+    .mode-panel .count {
+      grid-column: 2;
+    }
+
+    .voice-panel {
+      display: grid;
+      gap: 10px;
+    }
+
+    .voice-panel summary {
+      cursor: pointer;
+      color: var(--mint-dark);
+      font-weight: 800;
+      font-size: .9rem;
+    }
+
+    .voice-controls {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      align-items: end;
+    }
+
+    .voice-control {
+      display: grid;
+      gap: 4px;
+    }
+
+    .voice-control label {
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 800;
+    }
+
     .toolbar {
       display: flex;
       align-items: center;
@@ -621,6 +674,17 @@
     }
 
     .reading-passage p {
+      margin: 0;
+    }
+
+    .reading-question {
+      padding: 14px;
+      border-radius: 8px;
+      background: #f4f8fa;
+      border: 1px solid rgba(33, 49, 60, .08);
+    }
+
+    .reading-question p {
       margin: 0;
     }
 
@@ -870,6 +934,49 @@
         gap: 8px;
       }
 
+      .mode-panel,
+      .voice-panel {
+        padding: 8px;
+      }
+
+      .mode-panel .mode-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .mode-panel .mode-btn {
+        min-height: 68px;
+        grid-template-columns: 30px 1fr;
+        gap: 6px;
+        padding: 8px;
+      }
+
+      .mode-panel .mode-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      .mode-panel .mode-text strong {
+        font-size: .82rem;
+      }
+
+      .mode-panel .mode-text span {
+        display: none;
+      }
+
+      .mode-panel .count {
+        font-size: .72rem;
+      }
+
+      .voice-controls {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .voice-control label {
+        font-size: .7rem;
+      }
+
       .toolbar-group {
         width: 100%;
         display: grid;
@@ -987,6 +1094,10 @@
         line-height: 1.55;
       }
 
+      .reading-question {
+        padding: 10px;
+      }
+
       .visual-grid,
       .match-board {
         grid-template-columns: 1fr;
@@ -1037,6 +1148,21 @@
 
       .toolbar-group {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .mode-panel .mode-btn {
+        min-height: 64px;
+        padding: 7px;
+      }
+
+      .mode-panel .mode-icon {
+        width: 28px;
+        height: 28px;
+        font-size: .8rem;
+      }
+
+      .voice-controls {
+        grid-template-columns: 1fr;
       }
 
       select {
@@ -1117,11 +1243,6 @@
           <p>用校園、家庭、食物、天氣、健康等情境練習。</p>
         </section>
 
-        <section class="panel" aria-labelledby="modeTitle">
-          <h2 class="sr-only" id="modeTitle">練習模式</h2>
-          <div class="mode-list" id="modeList"></div>
-        </section>
-
         <section class="panel" aria-labelledby="progressTitle">
           <h2 class="sr-only" id="progressTitle">學習紀錄</h2>
           <div class="stat-grid">
@@ -1180,6 +1301,42 @@
             <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
           </div>
         </div>
+
+        <section class="mode-panel" aria-labelledby="modeTitle">
+          <h2 class="sr-only" id="modeTitle">練習模式</h2>
+          <div class="mode-list" id="modeList"></div>
+        </section>
+
+        <details class="voice-panel" id="voicePanel">
+          <summary>語音設定</summary>
+          <div class="voice-controls">
+            <div class="voice-control">
+              <label for="voiceModeSelect">聲音</label>
+              <select id="voiceModeSelect">
+                <option value="auto">自動</option>
+                <option value="male">男聲</option>
+                <option value="female">女聲</option>
+                <option value="mixed">混合</option>
+              </select>
+            </div>
+            <div class="voice-control">
+              <label for="voiceRateSelect">速度</label>
+              <select id="voiceRateSelect">
+                <option value="slow">慢</option>
+                <option value="normal">標準</option>
+                <option value="fast">快</option>
+              </select>
+            </div>
+            <div class="voice-control">
+              <label for="readingSpeakTargetSelect">Reading</label>
+              <select id="readingSpeakTargetSelect">
+                <option value="passage">短文</option>
+                <option value="question">問題</option>
+                <option value="all">全部</option>
+              </select>
+            </div>
+          </div>
+        </details>
 
         <article class="practice-stage" aria-live="polite">
           <header class="stage-head">
@@ -1246,6 +1403,18 @@
     };
 
     const STORAGE_KEY = 'geptKidsEnglishLab.v1';
+    const VOICE_STORAGE_KEYS = {
+      mode: 'geptVoiceMode',
+      rate: 'geptVoiceRate',
+      readingTarget: 'geptReadingSpeakTarget'
+    };
+    const VOICE_RATES = {
+      slow: 0.75,
+      normal: 0.85,
+      fast: 1
+    };
+    const MALE_VOICE_HINTS = ['male', 'david', 'mark', 'daniel', 'alex', 'george', 'james'];
+    const FEMALE_VOICE_HINTS = ['female', 'samantha', 'victoria', 'susan', 'karen', 'zira', 'linda'];
     const SESSION_LIMIT = 10;
     const RECENT_LIMIT = 18;
     const RECENT_LISTENING_SCENE_LIMIT = 5;
@@ -1269,11 +1438,17 @@
       stats: loadStats()
     };
 
+    let voiceSettings = loadVoiceSettings();
+    let speechTimer = null;
+
     const els = {
       modeList: document.getElementById('modeList'),
       levelSelect: document.getElementById('levelSelect'),
       topicSelect: document.getElementById('topicSelect'),
       difficultySelect: document.getElementById('difficultySelect'),
+      voiceModeSelect: document.getElementById('voiceModeSelect'),
+      voiceRateSelect: document.getElementById('voiceRateSelect'),
+      readingSpeakTargetSelect: document.getElementById('readingSpeakTargetSelect'),
       promptArea: document.getElementById('promptArea'),
       feedback: document.getElementById('feedback'),
       checkBtn: document.getElementById('checkBtn'),
@@ -1309,6 +1484,29 @@
       } catch (error) {
         return { total: 0, correct: 0, streak: 0, bestStreak: 0 };
       }
+    }
+
+    function loadVoiceSettings() {
+      const mode = localStorage.getItem(VOICE_STORAGE_KEYS.mode) || 'mixed';
+      const rate = localStorage.getItem(VOICE_STORAGE_KEYS.rate) || 'normal';
+      const readingTarget = localStorage.getItem(VOICE_STORAGE_KEYS.readingTarget) || 'all';
+      return {
+        mode: ['auto', 'male', 'female', 'mixed'].includes(mode) ? mode : 'mixed',
+        rate: Object.prototype.hasOwnProperty.call(VOICE_RATES, rate) ? rate : 'normal',
+        readingTarget: ['passage', 'question', 'all'].includes(readingTarget) ? readingTarget : 'all'
+      };
+    }
+
+    function saveVoiceSettings() {
+      localStorage.setItem(VOICE_STORAGE_KEYS.mode, voiceSettings.mode);
+      localStorage.setItem(VOICE_STORAGE_KEYS.rate, voiceSettings.rate);
+      localStorage.setItem(VOICE_STORAGE_KEYS.readingTarget, voiceSettings.readingTarget);
+    }
+
+    function renderVoiceSettings() {
+      els.voiceModeSelect.value = voiceSettings.mode;
+      els.voiceRateSelect.value = voiceSettings.rate;
+      els.readingSpeakTargetSelect.value = voiceSettings.readingTarget;
     }
 
     function saveStats() {
@@ -1371,6 +1569,7 @@
     }
 
     function pickQuestion() {
+      cancelSpeech();
       if (!state.questionQueue.length || state.queueKey !== getBankKey()) {
         buildQuestionQueue();
       }
@@ -1471,14 +1670,20 @@
           `).join('')}
         </div>
       `;
-      document.getElementById('listenBtn').addEventListener('click', () => speak(item.audio));
+      document.getElementById('listenBtn').addEventListener('click', () => speak(item.audio, { questionIndex: state.sessionTotal }));
       document.getElementById('captionBtn').addEventListener('click', () => {
         document.getElementById('captionText').classList.toggle('is-open');
       });
       els.promptArea.querySelectorAll('[data-answer]').forEach((btn) => {
         btn.addEventListener('click', () => selectAnswer(btn.dataset.answer));
       });
-      window.setTimeout(() => speak(item.audio), 250);
+      speakLater(item.audio, 250, { questionIndex: state.sessionTotal });
+    }
+
+    function getReadingSpeechText(item) {
+      if (voiceSettings.readingTarget === 'passage') return item.passage;
+      if (voiceSettings.readingTarget === 'question') return item.question;
+      return `${item.passage} ${item.question}`;
     }
 
     function renderReading() {
@@ -1486,9 +1691,14 @@
       els.promptArea.innerHTML = `
         <div class="question-block">
           <p class="eyebrow">${item.title}</p>
-          <p class="prompt-text">${item.question}</p>
+          <p class="prompt-text">Read and choose the best answer.</p>
+        </div>
+        <div class="audio-line">
+          <button class="listen-btn" type="button" id="readingListenBtn" aria-label="播放閱讀題目" ${canSpeak() ? '' : 'disabled'}>${ICONS.speaker}</button>
+          <p class="support-text">播放短文、問題或全部內容。</p>
         </div>
         <div class="reading-passage"><p>${item.passage}</p></div>
+        <div class="reading-question"><p class="prompt-text">${item.question}</p></div>
         <div class="option-grid">
           ${item.choices.map((choice, index) => `
             <button class="option-btn" type="button" data-answer="${choice.id}" aria-pressed="false">
@@ -1498,6 +1708,9 @@
           `).join('')}
         </div>
       `;
+      document.getElementById('readingListenBtn')?.addEventListener('click', () => {
+        speak(getReadingSpeechText(item), { questionIndex: state.sessionTotal });
+      });
       els.promptArea.querySelectorAll('[data-answer]').forEach((btn) => {
         btn.addEventListener('click', () => selectAnswer(btn.dataset.answer));
       });
@@ -1528,11 +1741,11 @@
           </div>
         </div>
       `;
-      document.getElementById('wordListenBtn').addEventListener('click', () => speak(item.word));
+      document.getElementById('wordListenBtn').addEventListener('click', () => speak(item.word, { questionIndex: state.sessionTotal }));
       els.promptArea.querySelectorAll('[data-answer]').forEach((btn) => {
         btn.addEventListener('click', () => selectAnswer(btn.dataset.answer));
       });
-      window.setTimeout(() => speak(item.word), 250);
+      speakLater(item.word, 250, { questionIndex: state.sessionTotal });
     }
 
     function selectAnswer(value) {
@@ -1602,6 +1815,7 @@
     }
 
     function showSessionComplete() {
+      cancelSpeech();
       const sessionLimit = getSessionLimit();
       const score = Math.round((state.sessionCorrect / sessionLimit) * 100);
       els.promptArea.innerHTML = `
@@ -1653,6 +1867,74 @@
       });
       first.onend = () => window.setTimeout(() => window.speechSynthesis.speak(second), 350);
       window.speechSynthesis.speak(first);
+    }
+
+    function canSpeak() {
+      return 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+    }
+
+    function cancelSpeech() {
+      if (speechTimer) {
+        window.clearTimeout(speechTimer);
+        speechTimer = null;
+      }
+      if (canSpeak()) window.speechSynthesis.cancel();
+    }
+
+    function findVoiceByHints(voices, hints) {
+      return voices.find((voice) => {
+        const name = (voice.name || '').toLowerCase();
+        return hints.some((hint) => name.includes(hint));
+      });
+    }
+
+    function pickEnglishVoice(preferredMode, questionIndex = 0) {
+      const voices = window.speechSynthesis.getVoices();
+      const englishVoices = voices.filter((voice) => voice.lang && voice.lang.toLowerCase().startsWith('en'));
+      const source = englishVoices.length ? englishVoices : voices;
+      if (!source.length) return null;
+
+      let mode = preferredMode;
+      if (mode === 'mixed') mode = questionIndex % 2 === 0 ? 'male' : 'female';
+
+      if (mode === 'male') {
+        return findVoiceByHints(source, MALE_VOICE_HINTS)
+          || source.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith('en-us'))
+          || source[0];
+      }
+      if (mode === 'female') {
+        return findVoiceByHints(source, FEMALE_VOICE_HINTS)
+          || source.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith('en-us'))
+          || source[0];
+      }
+      return source.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith('en-us')) || source[0];
+    }
+
+    function speak(text, options = {}) {
+      if (!canSpeak()) {
+        showFeedback(false, '語音播放無法使用', '請改用支援 speechSynthesis 的瀏覽器。');
+        return;
+      }
+      cancelSpeech();
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voiceMode = options.mode || voiceSettings.mode;
+      const questionIndex = Number.isFinite(options.questionIndex) ? options.questionIndex : state.sessionTotal;
+      const voice = pickEnglishVoice(voiceMode, questionIndex);
+      utterance.lang = 'en-US';
+      utterance.rate = VOICE_RATES[voiceSettings.rate] || VOICE_RATES.normal;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+      if (voice) utterance.voice = voice;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function speakLater(text, delay = 250, options = {}) {
+      if (!canSpeak()) return;
+      if (speechTimer) window.clearTimeout(speechTimer);
+      speechTimer = window.setTimeout(() => {
+        speechTimer = null;
+        speak(text, options);
+      }, delay);
     }
 
     function shuffle(items) {
@@ -1897,6 +2179,24 @@
         pickQuestion();
       });
 
+      els.voiceModeSelect.addEventListener('change', () => {
+        voiceSettings.mode = els.voiceModeSelect.value;
+        saveVoiceSettings();
+        cancelSpeech();
+      });
+
+      els.voiceRateSelect.addEventListener('change', () => {
+        voiceSettings.rate = els.voiceRateSelect.value;
+        saveVoiceSettings();
+        cancelSpeech();
+      });
+
+      els.readingSpeakTargetSelect.addEventListener('change', () => {
+        voiceSettings.readingTarget = els.readingSpeakTargetSelect.value;
+        saveVoiceSettings();
+        cancelSpeech();
+      });
+
       els.checkBtn.addEventListener('click', checkAnswer);
       els.nextBtn.addEventListener('click', nextQuestion);
       els.skipBtn.addEventListener('click', pickQuestion);
@@ -1914,6 +2214,7 @@
 
     bindEvents();
     renderStats();
+    renderVoiceSettings();
     renderModeList();
     pickQuestion();
   </script>
